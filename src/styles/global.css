@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lato";
+  --font-heading: "Oswald Variable";
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(@fontsource/lato/files/lato-latin-400-normal.woff2) format("woff2"),
+    url(@fontsource/lato/files/lato-latin-400-normal.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* oswald-latin-wght-normal */
+@font-face {
+  font-family: "Oswald Variable";
+  font-style: normal;
+  font-display: auto;
+  font-weight: 200 700;
+  src: url(@fontsource-variable/oswald/files/oswald-latin-wght-normal.woff2)
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Lato", sans-serif;
+}
+
+h1 {
+  font-family: "Oswald Variable", sans-serif;
+}
+
+.client-img-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  will-change: clip-path;
+  overflow: hidden;
+}
+
+.client-img-wrapper img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, opacity;
+}
+
+#morph-container {
+  height: clamp(3rem, 6vw, 6rem);
+}
+
+.threshold-layer {
+  filter: url(#threshold);
+  will-change: transform;
+}

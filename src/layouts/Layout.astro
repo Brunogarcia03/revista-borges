@@ -1,22 +1,69 @@
+---
+import "../styles/global.css";
+
+import Intro from "../components/ui/Intro.astro";
+import Header from "../components/Header.astro";
+
+import { ClientRouter } from "astro:transitions";
+
+const { themeHeader = false } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Revista Borges</title>
+
+    <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
+  </head>
+  <body>
+    <Header black={themeHeader} />
+    <slot />
+    <Intro />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  * {
+    user-select: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lock-scroll {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+    height: 100vh;
+    top: 0;
+    left: 0;
+  }
 </style>
+
+<script>
+  import Lenis from "lenis";
+
+  let lenis: any;
+
+  function initLenis() {
+    if (lenis) return;
+
+    lenis = new Lenis({
+      autoRaf: true,
+      smoothWheel: true,
+    });
+  }
+
+  initLenis();
+
+  document.addEventListener("astro:after-swap", () => {
+    lenis?.resize();
+    lenis?.scrollTo(window.scrollY, { immediate: true });
+  });
+</script>

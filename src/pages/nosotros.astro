@@ -1,0 +1,307 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const trustedBy = ["Nike", "Prada", "Google", "Lacoste", "Rabanne", "Vogue"];
+
+const press = ["Vogue Italia", "Highsnobiety", "Paper Magazine", "Libération"];
+
+const services = [
+  "Ensayo visual",
+  "Investigación cultural",
+  "Narrativas digitales",
+  "Dirección editorial",
+];
+
+const contact = [
+  { label: "Email", value: "hello@studio.com" },
+  { label: "Instagram", value: "Instagram" },
+  { label: "LinkedIn", value: "LinkedIn" },
+];
+---
+
+<Layout themeHeader={true}>
+  <main
+    class="clients relative flex flex-col w-full min-h-dvh overflow-hidden isolate bg-white py-16 md:py-20"
+  >
+    <!-- Texto principal -->
+    <section class="mx-3 sm:mx-5 space-y-4 z-20">
+      <p
+        class="split text-lg sm:text-xl md:text-2xl leading-5 md:leading-7 font-bold max-w-5xl text-pretty z-20 mix-blend-difference text-black"
+      >
+        1. Somos una publicación independiente que entiende la libre expresión
+        como un bien fundamental. Defendemos la palabra, la imagen y la idea
+        como territorios donde el pensamiento crítico no solo es posible, sino
+        necesario. Nuestro trabajo nace de la observación, la duda y el
+        conflicto con lo establecido.
+      </p>
+
+      <p
+        class="split text-lg sm:text-xl md:text-2xl leading-5 md:leading-7 font-bold max-w-5xl text-pretty z-20"
+      >
+        2. Abordamos cultura, arte, tecnología y sociedad desde una mirada
+        editorial que cuestiona, conecta y propone. Cada edición, cada pieza y
+        cada colaboración busca abrir conversaciones, tal vez incomodar pero,
+        sobre todo: expandir el lenguaje con el que interpretamos el presente.
+      </p>
+    </section>
+
+    <div
+      class="clients-preview fixed top-1/2 -translate-1/2 left-1/2 w-[90%] h-[60%] sm:w-[80%] sm:h-[50%] md:w-[70%] md:h-[55%] lg:w-[65%] lg:h-[75%] z-0 pointer-events-none"
+    >
+    </div>
+
+    <!-- Footer -->
+    <footer
+      class="flex flex-col gap-y-10 md:flex-row justify-between mx-3 sm:mx-5 pt-6 md:pt-12 mt-auto z-20"
+    >
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6 max-w-5xl">
+        <!-- Confían -->
+        <article class="max-w-xs appearance">
+          <span class="text-neutral-700 uppercase font-heading text-sm">
+            Confían en nosotros
+          </span>
+          <ul class="mt-1 text-sm leading-relaxed clients-list">
+            {
+              trustedBy.map((item, i) => (
+                <li class="client-name inline relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-100 after:bg-neutral-800 after:transition-transform after:duration-150 after:ease-in-out hover:after:origin-bottom-right hover:after:scale-x-0 mr-1 cursor-pointer">
+                  {item}
+                  {i < trustedBy.length - 1 && ", "}
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+
+        <!-- Prensa -->
+        <article class="appearance">
+          <span class="text-neutral-700 uppercase font-heading text-sm">
+            Prensa
+          </span>
+          <ul class="mt-1 text-sm leading-relaxed">
+            {
+              press.map((item, i) => (
+                <li class="inline cursor-pointer">
+                  {item}
+                  {i < press.length - 1 && ", "}
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+
+        <!-- Servicios -->
+        <article class="appearance">
+          <span class="text-neutral-700 uppercase font-heading text-sm">
+            Servicios
+          </span>
+          <ul class="mt-1 text-sm leading-relaxed">
+            {
+              services.map((item, i) => (
+                <li
+                  class={`inline mr-1 relative after:absolute after:bottom-0 after:left-0 after:h-px after:bg-black after:w-full after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 cursor-pointer`}
+                >
+                  {item}
+                  {i < services.length - 1 && ", "}
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+
+        <!-- Contacto -->
+        <article class="appearance max-w-sm">
+          <span class="text-neutral-700 uppercase font-heading text-sm">
+            Contacto
+          </span>
+          <ul class="mt-1 text-sm leading-relaxed cursor-pointer">
+            {contact.map((item) => <li>{item.value}</li>)}
+          </ul>
+        </article>
+      </div>
+
+      <!-- Call to action -->
+      <div
+        class="flex flex-col items-center md:items-end justify-between w-full min-h-full lg:mr-12"
+      >
+        <div
+          class="md:hidden w-full border-t-2 border-dashed border-black mt-4 md:mt-7"
+        >
+        </div>
+        <h3
+          class="split mt-4 md:mt-0 text-3xl md:text-4xl lg:text-5xl text-center md:text-end text-balance max-w-none md:max-w-md font-bold font-heading uppercase"
+          style="filter: url(#threshold)"
+        >
+          Pensar el presente. Publicar sin concesiones.
+        </h3>
+        <button
+          id="colabs"
+          class="appearance flex justify-end w-full max-w-md md:max-w-md group mt-4 md:mt-auto"
+          ><span
+            class="w-full max-w-md md:max-w-lg py-2 rounded-[.2rem] bg-black group-hover:bg-transparent border border-transparent group-hover:border-dashed group-hover:border-black group-hover:text-black transition-colors duration-300 text-white"
+            >Proponer una colaboración</span
+          ></button
+        >
+      </div>
+    </footer>
+    <svg class="absolute w-0 h-0">
+      <defs>
+        <filter id="threshold">
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values=" 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140 "
+          ></feColorMatrix>
+        </filter>
+      </defs>
+    </svg>
+  </main>
+</Layout>
+
+<script>
+  import gsap from "gsap";
+  import SplitText from "gsap/SplitText";
+
+  import img1 from "../assets/simulations/img1.webp";
+  import img2 from "../assets/simulations/img2.webp";
+  import img3 from "../assets/simulations/img3.webp";
+  import img4 from "../assets/simulations/img4.webp";
+  import img5 from "../assets/simulations/img5.webp";
+  import img6 from "../assets/simulations/img6.webp";
+
+  const trustedImgs = [
+    img1.src,
+    img2.src,
+    img3.src,
+    img4.src,
+    img5.src,
+    img6.src,
+  ];
+
+  gsap.registerPlugin(SplitText);
+
+  let splits: any[] = [];
+
+  function initSplitTextHero() {
+    gsap.registerPlugin(SplitText);
+
+    console.clear();
+
+    const clientsPreview = document.querySelector(".clients-preview");
+    const clientNames = document.querySelectorAll(".client-name");
+
+    let activeClientIndex = -1;
+
+    clientNames.forEach((client, index) => {
+      let activeClientImgWrapper: any = null;
+      let activeClientImg: any = null;
+
+      client.addEventListener("mouseover", () => {
+        if (activeClientIndex === index) return;
+
+        if (activeClientIndex !== -1) {
+          const previousClient = clientNames[activeClientIndex];
+          const mouseoutEvent = new Event("mouseout");
+          previousClient.dispatchEvent(mouseoutEvent);
+        }
+
+        activeClientIndex = index;
+
+        const clientImgWrapper = document.createElement("div");
+        clientImgWrapper.className = "client-img-wrapper";
+
+        const clientImg = document.createElement("img");
+        clientImg.src = trustedImgs[index];
+        gsap.set(clientImg, { scale: 1.25, opacity: 0 });
+
+        clientImgWrapper.appendChild(clientImg);
+        clientsPreview?.appendChild(clientImgWrapper);
+
+        activeClientImgWrapper = clientImgWrapper;
+        activeClientImg = clientImg;
+
+        gsap.to(clientImgWrapper, {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          duration: 0.5,
+          ease: "power3.inOut",
+        });
+
+        gsap.to(clientImg, {
+          opacity: 1,
+          duration: 0.25,
+          ease: "power2.out",
+        });
+
+        gsap.to(clientImg, {
+          scale: 1,
+          duration: 1.25,
+          ease: "power3.inOut",
+        });
+      });
+
+      client.addEventListener("mouseout", (event) => {
+        if (activeClientIndex === index) {
+          activeClientIndex = -1;
+        }
+
+        if (activeClientImg && activeClientImgWrapper) {
+          const clientImgToRemove = activeClientImg;
+          const clientImgWrapperToRemove = activeClientImgWrapper;
+
+          activeClientImg = null;
+          activeClientImgWrapper = null;
+
+          gsap.to(clientImgToRemove, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power1.out",
+            onComplete: () => {
+              clientImgWrapperToRemove.remove();
+            },
+          });
+        }
+      });
+    });
+
+    document.fonts.ready.then(() => {
+      gsap.set(".split", { opacity: 1 });
+
+      let split: any;
+      SplitText.create(".split", {
+        type: "lines",
+        autoSplit: true,
+        mask: "lines",
+        onSplit: (self) => {
+          split = gsap.from(self.lines, {
+            duration: 0.6,
+            yPercent: 100,
+            opacity: 0,
+            stagger: 0.1,
+            ease: "expo.out",
+          });
+          return split;
+        },
+      });
+
+      gsap.from(".appearance", {
+        scale: 0.5,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "expo.out",
+      });
+    });
+  }
+
+  function cleanupSplitTextHero() {
+    splits.forEach((split) => split.revert());
+    splits = [];
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initSplitTextHero();
+  });
+
+  document.addEventListener("astro:before-swap", () => {
+    cleanupSplitTextHero();
+  });
+</script>
