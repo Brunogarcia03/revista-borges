@@ -21,6 +21,7 @@
     <div class="flex gap-2 md:gap-3 items-center justify-center">
       <button
         id="prev"
+        aria-label="Contenido anterior"
         class="flex items-center justify-center border border-dashed border-white rounded-[.2rem] size-8 md:size-10 group bg-white hover:bg-transparent transition-colors duration-200 cursor-pointer"
       >
         <svg
@@ -41,6 +42,7 @@
       </p>
       <button
         id="next"
+        aria-label="Contenido siguiente"
         class="flex items-center justify-center border border-dashed border-white rounded-[.2rem] size-8 md:size-10 group bg-white hover:bg-transparent transition-colors duration-200 cursor-pointer"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
@@ -58,13 +60,16 @@
       id="morph-container"
       class="relative w-full md:w-2xl min-h-12 sm:min-h-18 md:min-h-22 leading-none filter group"
       style="filter: url(#threshold)"
+      aria-labelledby="morph-text"
     >
       <span
         id="text1"
+        aria-hidden="true"
         class="absolute inset-0 flex sm:items-center font-heading font-semibold text-2xl sm:text-4xl md:text-6xl uppercase -tracking-wider text-white text-pretty"
       ></span>
       <span
         id="text2"
+        aria-hidden="true"
         class="absolute inset-0 flex sm:items-center font-heading font-semibold text-2xl sm:text-4xl md:text-6xl uppercase -tracking-wider text-white text-pretty"
       ></span>
     </div>
@@ -87,7 +92,7 @@
           width="64px"
           fill="#000"
           style="filter: url(#threshold)"
-          class="size-16 md:size-20 md:-rotate-12 group-hover:rotate-0 group-hover:blur-[0px] transition-all duration-300"
+          class="size-12 sm:size-16 md:size-20 md:-rotate-12 group-hover:rotate-0 group-hover:blur-[0px] transition-all duration-300"
           ><path
             d="M673-446.67H160v-66.66h513l-240-240L480-800l320 320-320 320-47-46.67 240-240Z"
           ></path></svg
