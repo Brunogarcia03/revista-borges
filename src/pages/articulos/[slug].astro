@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { news } from "../../data/NewsList";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  return news.map((notice) => {
+    return {
+      params: { slug: notice.slug },
+      props: { notice },
+    };
+  });
+}
+
+const { notice } = Astro.props;
+---
+
+<Layout themeHeader={false}>
+  <main class="w-full overflow-hidden">
+    <section
+      class="flex flex-col justify-center py-20 md:py-24 px-2 sm:px-5 md:px-0 min-h-dvh bg-neutral-800 text-white"
+    >
+      <div
+        class="px-5 py-1 bg-amber-300 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center mb-5"
+      >
+        {notice.categoria}
+      </div>
+      <p
+        class="uppercase font-semibold text-base md:text-lg leading-5 sm:leading-6 text-center max-w-xl md:max-w-2xl mx-auto text-pretty"
+      >
+        {notice.subtitulo}
+      </p>
+      <div
+        class="w-48 md:w-56 mx-auto border-t-4 border-dashed border-amber-300 mt-4 md:mt-7"
+      >
+      </div>
+      <h1
+        class="uppercase font-bold font-heading text-center text-2xl sm:text-3xl md:text-4xl mt-6 md:mt-8"
+      >
+        {notice.title}
+      </h1>
+      <div
+        class="relative w-full max-w-3xl mx-auto mt-6 md:mt-8 aspect-video rounded-[.2rem] overflow-hidden"
+      >
+        <img
+          src={notice.imagen}
+          alt={notice.title}
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,32 @@
+---
+const { black = true } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 240 80"
+  xmlns="http://www.w3.org/2000/svg"
+  class={`${black ? "fill-black" : "fill-white"}`}
+  role="img"
+  aria-label="Parrhesia Revista"
+>
+  <text x="50%" y="34" text-anchor="middle" class="font-serif text-[36px]">
+    PARRHESIA
+  </text>
+
+  <line
+    x1="24"
+    y1="46"
+    x2="216"
+    y2="46"
+    stroke={black ? "#000" : "#FFF"}
+    stroke-width="1"></line>
+
+  <text
+    x="50%"
+    y="70"
+    text-anchor="middle"
+    class="font-serif text-[18px] tracking-[0.35em]"
+  >
+    REVISTA
+  </text>
+</svg>

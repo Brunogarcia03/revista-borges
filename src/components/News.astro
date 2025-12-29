@@ -2,7 +2,7 @@
 import { news } from "../data/NewsList";
 ---
 
-<section class="py-16 md:py-24 bg-neutral-800 text-white">
+<section class="pt-16 md:pt-24 bg-neutral-800 text-white">
   <div class="container mx-auto px-4 sm:px-6 md:px-8">
     <p class="uppercase text-[.8rem] md:text-[1rem] leading-[1.1em]">
       Filtrar por
@@ -25,7 +25,7 @@ import { news } from "../data/NewsList";
   >
     {
       news.map((item) => (
-        <a href={`/${item.slug}`} class="">
+        <a href={`/articulos/${item.slug}`} class="">
           <article class="relative group">
             <div class="absolute right-0 top-0 z-1 px-3 py-1 bg-amber-300 uppercase font-heading font-bold text-xs">
               {item.categoria}
@@ -38,10 +38,12 @@ import { news } from "../data/NewsList";
               />
             </div>
 
-            <h2 class="mt-2 text-base md:text-lg font-bold font-heading text-pretty">
+            <h2 class="mt-2 text-lg md:text-xl font-bold font-heading text-pretty">
               {item.title}
             </h2>
-            <p class="mt-1 text-xs md:text-sm text-pretty">{item.subtitulo}</p>
+            <p class="mt-1 text-sm md:text-base text-pretty">
+              {item.subtitulo}
+            </p>
           </article>
         </a>
       ))
