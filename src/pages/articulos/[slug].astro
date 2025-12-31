@@ -1,27 +1,28 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { news } from "../../data/NewsList";
 import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
-  return news.map((notice) => {
-    return {
-      params: { slug: notice.slug },
-      props: { notice },
-    };
-  });
+  const articulos = await getCollection("articulos");
+
+  return articulos.map((art: CollectionEntry<"articulos">) => ({
+    params: { slug: art.slug },
+    props: { art },
+  }));
 }
 
-const { notice } = Astro.props;
+const { art } = Astro.props;
 ---
 
 <Layout
   themeHeader={false}
-  title={`${notice.title} — Revista Parrhesia`}
-  description={notice.subtitulo +
+  title={`${art.data.title} — Revista Parrhesia`}
+  description={art.data.subtitulo +
     "— Pensar el presente. Publicar sin concesiones."}
-  image={notice.imagen}
-  canonical={`https://revista-parrhesia.vercel.app/articulos/${notice.slug}`}
+  image={art.data.imagen}
+  canonical={`https://revista-parrhesia.vercel.app/articulos/${art.slug}`}
 >
   <main class="w-full overflow-hidden bg-neutral-800">
     <section
@@ -31,13 +32,13 @@ const { notice } = Astro.props;
         id="category"
         class="px-5 py-1 bg-amber-300 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center mb-5"
       >
-        {notice.categoria}
+        {art.data.categoria}
       </div>
       <p
         id="subtitle"
         class="uppercase font-semibold text-base md:text-lg leading-5 sm:leading-6 text-center max-w-xl md:max-w-2xl mx-auto text-pretty"
       >
-        {notice.subtitulo}
+        {art.data.subtitulo}
       </p>
       <div
         class="w-48 md:w-56 mx-auto border-t-4 border-dashed border-amber-300 mt-4 md:mt-7"
@@ -46,17 +47,18 @@ const { notice } = Astro.props;
       <h1
         class="uppercase font-bold font-heading text-center text-2xl sm:text-3xl md:text-4xl mt-6 md:mt-8"
       >
-        {notice.title}
+        {art.data.title}
       </h1>
       <div
         class="relative w-full max-w-3xl mx-auto mt-6 md:mt-8 aspect-video rounded-[.2rem] overflow-hidden"
       >
         <img
-          src={notice.imagen}
-          alt={notice.title}
+          src={art.data.imagen}
+          alt={art.data.title}
           class="absolute inset-0 w-full h-full object-cover"
         />
       </div>
+      <div set:html={art.body} />
     </section>
     <Footer />
   </main>
