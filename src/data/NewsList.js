@@ -2,16 +2,17 @@ import hero_1 from "../assets/photos/hero (1).webp";
 import hero_2 from "../assets/photos/hero (2).webp";
 import hero_3 from "../assets/photos/hero (3).webp";
 import hero_4 from "../assets/photos/hero (4).webp";
+import nuestro_nombre from "../assets/photos/nuestro_nombre.jpg";
 
 export const news = [
   {
-    title: "Yo me estoy ahogando y vos me describís el agua",
-    slug: "yo-me-estoy-ahogando-y-vos-me-describis-el-agua",
+    title: "Nuestro nombre",
+    slug: "nuestro-nombre",
     autor: "Bruno García",
     subtitulo:
       "Sobre la distancia entre el dolor vivido y el lenguaje que intenta explicarlo",
     categoria: "literatura",
-    imagen: hero_1.src,
+    imagen: nuestro_nombre.src,
     body: `
 Hay una violencia sutil en explicar lo evidente a quien ya está herido.
 No es crueldad, sino una forma de defensa: describir el agua en lugar de

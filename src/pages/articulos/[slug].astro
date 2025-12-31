@@ -21,18 +21,20 @@ const { notice } = Astro.props;
   description={notice.subtitulo +
     "— Pensar el presente. Publicar sin concesiones."}
   image={notice.imagen}
-  canonical={`https://revista-borges.vercel.app/articulos/${notice.slug}`}
+  canonical={`https://revista-parrhesia.vercel.app/articulos/${notice.slug}`}
 >
-  <main class="w-full overflow-hidden">
+  <main class="w-full overflow-hidden bg-neutral-800">
     <section
-      class="flex flex-col justify-center py-20 md:py-24 px-2 sm:px-5 md:px-0 min-h-dvh bg-neutral-800 text-white"
+      class="flex flex-col justify-center py-24 md:py-32 px-2 sm:px-5 md:px-0 h-full bg-neutral-800 text-white"
     >
       <div
+        id="category"
         class="px-5 py-1 bg-amber-300 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center mb-5"
       >
         {notice.categoria}
       </div>
       <p
+        id="subtitle"
         class="uppercase font-semibold text-base md:text-lg leading-5 sm:leading-6 text-center max-w-xl md:max-w-2xl mx-auto text-pretty"
       >
         {notice.subtitulo}
@@ -56,6 +58,95 @@ const { notice } = Astro.props;
         />
       </div>
     </section>
+    <Footer />
   </main>
-  <Footer />
 </Layout>
+
+<script>
+  import gsap from "gsap";
+  import SplitText from "gsap/SplitText";
+
+  gsap.registerPlugin(SplitText);
+
+  function initPageAnimations() {
+    const category = document.getElementById("category");
+    const subtitle = document.getElementById("subtitle");
+    const title = document.querySelector("h1");
+    const image = document.querySelector("section img");
+    const rule = document.querySelector(".border-dashed");
+
+    if (!category || !subtitle) return;
+
+    // Split subtitle
+    const splitSubtitle = new SplitText(subtitle, {
+      type: "words",
+      wordsClass: "word",
+    });
+
+    gsap.set([category, title, rule], {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set(image, {
+      scale: 0.8,
+      opacity: 0,
+    });
+
+    gsap.set(splitSubtitle.words, {
+      opacity: 0,
+      y: 10,
+    });
+
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "expo.out",
+      },
+    });
+
+    tl.to(category, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+    })
+      .to(
+        splitSubtitle.words,
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.03,
+          duration: 0.6,
+        },
+        "-=0.2"
+      )
+      .to(
+        rule,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+        },
+        "-=0.3"
+      )
+      .to(
+        title,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+        },
+        "-=0.4"
+      )
+      .to(
+        image,
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+        },
+        "-=0.5"
+      );
+  }
+
+  document.addEventListener("astro:page-load", initPageAnimations);
+</script>
