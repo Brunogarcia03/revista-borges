@@ -2,7 +2,9 @@ backend:
   name: github
   repo: Brunogarcia03/revista-borges
   branch: master
-  auth_scope: repo
+
+site_url: https://revista-parrhesia.vercel.app
+display_url: https://revista-parrhesia.vercel.app
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
