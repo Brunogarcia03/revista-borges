@@ -6,10 +6,11 @@ import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
 import keystatic from "@keystatic/astro";
 
-import vercel from "@astrojs/vercel";
+import vercel from "@astrojs/vercel/serverless";
 
 export default defineConfig({
-  adapter: vercel(),
+  output: "server",
+  adapter: vercel({}),
 
   vite: {
     plugins: [tailwindcss()],
