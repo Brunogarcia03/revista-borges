@@ -1,19 +1,35 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
+
+import facebook from "../../assets/svgs/facebook-icon.svg";
+import instagram from "../../assets/svgs/instagram-icon.svg";
+import github from "../../assets/svgs/github_dark.svg";
+import link from "../../assets/svgs/link.svg";
+import x from "../../assets/svgs/x_dark.svg";
+import linkedin from "../../assets/svgs/linkedin.svg";
+
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
   const articulos = await getCollection("articulos");
 
-  return articulos.map((art: CollectionEntry<"articulos">) => ({
+  return articulos.map((art) => ({
     params: { slug: art.slug },
     props: { art },
   }));
 }
 
 const { art } = Astro.props;
+
+const authors = await Promise.all(
+  art.data.autores.map((ref) => getEntry(ref.collection, ref.slug))
+);
+
+const { Content } = await art.render();
 ---
 
 <Layout
@@ -26,7 +42,7 @@ const { art } = Astro.props;
 >
   <main class="w-full overflow-hidden bg-neutral-800">
     <section
-      class="flex flex-col justify-center py-24 md:py-32 px-2 sm:px-5 md:px-0 h-full bg-neutral-800 text-white"
+      class="flex flex-col justify-center pb-8 pt-24 md:pb-16 md:pt-32 px-2 sm:px-5 md:px-0 h-full bg-neutral-800 text-white"
     >
       <div
         id="category"
@@ -58,7 +74,130 @@ const { art } = Astro.props;
           class="absolute inset-0 w-full h-full object-cover"
         />
       </div>
-      <div set:html={art.body} />
+      <article
+        class="max-w-none w-full mt-4 sm:mt-8 sm:max-w-2xl md:max-w-3xl lg:max-w-5xl prose-invert mx-auto prose-lg sm:prose-lg md:prose-xl"
+      >
+        <Content />
+      </article>
+      {
+        authors.map((author) => (
+          <div class="flex items-center justify-end gap-4 mt-8 w-full max-w-5xl mx-auto">
+            <div class="flex flex-col text-right">
+              <p class="font-bold">{author?.data.name}</p>
+
+              {author?.data.role && (
+                <p class="text-sm opacity-70">{author?.data.role}</p>
+              )}
+
+              {author?.data.socials && (
+                <ul class="flex justify-end items-center gap-3 mt-2">
+                  {author?.data.socials.instagram && (
+                    <li>
+                      <a
+                        href={author?.data.socials.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                      >
+                        <img
+                          src={instagram.src}
+                          alt="Instagram"
+                          class="w-4 h-4 opacity-70 hover:opacity-100 transition"
+                        />
+                      </a>
+                    </li>
+                  )}
+
+                  {author?.data.socials.facebook && (
+                    <li>
+                      <a
+                        href={author?.data.socials.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook"
+                      >
+                        <img
+                          src={facebook.src}
+                          alt="Facebook"
+                          class="w-4 h-4 opacity-70 hover:opacity-100 transition"
+                        />
+                      </a>
+                    </li>
+                  )}
+
+                  {author?.data.socials.github && (
+                    <li>
+                      <a
+                        href={author?.data.socials.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub"
+                      >
+                        <img
+                          src={github.src}
+                          alt="GitHub"
+                          class="w-4 h-4 opacity-70 hover:opacity-100 transition"
+                        />
+                      </a>
+                    </li>
+                  )}
+
+                  {author?.data.socials.linkedin && (
+                    <li>
+                      <a
+                        href={author?.data.socials.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                      >
+                        <img
+                          src={linkedin.src}
+                          alt="LinkedIn"
+                          class="w-4 h-4 opacity-70 hover:opacity-100 transition"
+                        />
+                      </a>
+                    </li>
+                  )}
+
+                  {author?.data.socials.x && (
+                    <li>
+                      <a
+                        href={author?.data.socials.x}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="X"
+                      >
+                        <img
+                          src={x.src}
+                          alt="X"
+                          class="w-4 h-4 opacity-70 hover:opacity-100 transition"
+                        />
+                      </a>
+                    </li>
+                  )}
+
+                  {author?.data.socials.website && (
+                    <li>
+                      <a
+                        href={author?.data.socials.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Sitio web"
+                      >
+                        <img
+                          src={link.src}
+                          alt="Website"
+                          class="w-4 h-4 opacity-70 hover:opacity-100 transition"
+                        />
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))
+      }
     </section>
     <Footer />
   </main>
