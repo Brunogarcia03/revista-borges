@@ -18,6 +18,6 @@ export default defineConfig({
   integrations: [
     react(),
     markdoc(),
-    ...(process.env.NODE_ENV === "development" ? [keystatic()] : []),
+    // keystatic()
   ],
 });
