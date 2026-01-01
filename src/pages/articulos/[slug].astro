@@ -25,9 +25,17 @@ export async function getStaticPaths() {
 
 const { art } = Astro.props;
 
-const authors = await Promise.all(
-  art.data.autores.map((ref) => getEntry(ref.collection, ref.slug))
-);
+const authors = (
+  await Promise.all(
+    art.data.autores.map(async (slug) => {
+      try {
+        return await getEntry("autores", slug);
+      } catch {
+        return null;
+      }
+    })
+  )
+).filter(Boolean);
 
 const { Content } = await art.render();
 ---

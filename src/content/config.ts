@@ -26,12 +26,7 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       subtitulo: z.string(),
-      autores: z.array(
-        z.object({
-          collection: z.literal("autores"),
-          slug: z.string(),
-        })
-      ),
+      autores: z.array(z.string()),
       date: z.date(),
       categoria: z.string(),
       imagen: z.string(),
