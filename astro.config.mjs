@@ -19,9 +19,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [
-    react(),
-    markdoc(),
-    // keystatic()
-  ],
+  integrations: [react(), markdoc(), keystatic()],
 });
