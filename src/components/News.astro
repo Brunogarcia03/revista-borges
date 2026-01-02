@@ -94,52 +94,54 @@ const news = articulos
 </section>
 
 <script is:inline>
-  const buttons = document.querySelectorAll(".category-btn");
-  const articles = document.querySelectorAll(".article-item");
+  function initCategoryFilter() {
+    const buttons = document.querySelectorAll(".category-btn");
+    const articles = document.querySelectorAll(".article-item");
 
-  let activeCategory = "todos";
+    if (!buttons.length || !articles.length) return;
 
-  const setActiveButton = (activeBtn) => {
-    buttons.forEach((btn) => btn.classList.remove("bg-white", "text-black"));
-    activeBtn.classList.add("bg-white", "text-black");
-  };
+    const setActiveButton = (activeBtn) => {
+      buttons.forEach((btn) => {
+        btn.classList.remove("bg-white", "text-black");
+        btn.classList.add("bg-transparent", "text-white");
+      });
 
-  const showAllArticles = () => {
-    articles.forEach((article) => {
-      article.style.display = "";
-    });
-  };
+      activeBtn.classList.remove("bg-transparent", "text-white");
+      activeBtn.classList.add("bg-white", "text-black");
+    };
 
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const category = btn.dataset.category;
-
-      activeCategory = category;
-      setActiveButton(btn);
-
-      // Caso TODOS
-      if (category === "todos") {
-        showAllArticles();
-        return;
-      }
-
-      // Filtrado por categoría
+    const showAllArticles = () => {
       articles.forEach((article) => {
-        const artCategory = article.dataset.category;
+        article.style.display = "";
+      });
+    };
 
-        if (artCategory === category) {
-          article.style.display = "";
-        } else {
-          article.style.display = "none";
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const category = btn.dataset.category;
+
+        setActiveButton(btn);
+
+        if (category === "todos") {
+          showAllArticles();
+          return;
         }
+
+        articles.forEach((article) => {
+          article.style.display =
+            article.dataset.category === category ? "" : "none";
+        });
       });
     });
-  });
 
-  // Estado inicial: Todos activo
-  const defaultBtn = document.querySelector('[data-category="todos"]');
-  if (defaultBtn) {
-    setActiveButton(defaultBtn);
-    showAllArticles();
+    // Estado inicial
+    const defaultBtn = document.querySelector('[data-category="todos"]');
+    if (defaultBtn) {
+      setActiveButton(defaultBtn);
+      showAllArticles();
+    }
   }
+
+  // Astro transitions hook
+  document.addEventListener("astro:page-load", initCategoryFilter);
 </script>
