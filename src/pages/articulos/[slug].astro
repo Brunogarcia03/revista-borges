@@ -54,7 +54,7 @@ const { Content } = await art.render();
     >
       <div
         id="category"
-        class="px-5 py-1 bg-amber-300 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center mb-5"
+        class="px-5 py-1 bg-amber-300 opacity-0 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center mb-5"
       >
         {art.data.categoria}
       </div>
@@ -65,11 +65,11 @@ const { Content } = await art.render();
         {art.data.subtitulo}
       </p>
       <div
-        class="w-48 md:w-56 mx-auto border-t-4 border-dashed border-amber-300 mt-4 md:mt-7"
+        class="w-48 md:w-56 mx-auto opacity-0 border-t-4 border-dashed border-amber-300 mt-4 md:mt-7"
       >
       </div>
       <h1
-        class="uppercase font-bold font-heading text-center text-2xl sm:text-3xl md:text-4xl mt-6 md:mt-8"
+        class="uppercase font-bold opacity-0 font-heading text-center text-2xl sm:text-3xl md:text-4xl mt-6 md:mt-8"
       >
         {art.data.title}
       </h1>
@@ -79,7 +79,7 @@ const { Content } = await art.render();
         <img
           src={art.data.imagen}
           alt={art.data.title}
-          class="absolute inset-0 w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full opacity-0 object-cover"
         />
       </div>
       <article
@@ -89,14 +89,7 @@ const { Content } = await art.render();
       </article>
       {
         authors.map((author) => (
-          <div class="flex items-end justify-end gap-4 mt-8 w-full max-w-5xl mx-auto">
-            <div class="relative w-16 h-16 rounded-[.2rem]">
-              <img
-                src={author?.data.avatar}
-                class="absolute inset-0 w-full h-full object-cover rounded-[.2rem]"
-                alt={author?.data.name}
-              />
-            </div>
+          <div class="content-author flex items-end justify-end gap-4 mt-8 w-full max-w-5xl mx-auto">
             <div class="flex flex-col text-right">
               <p class="font-bold">{author?.data.name}</p>
 
@@ -259,6 +252,11 @@ const { Content } = await art.render();
       y: 10,
     });
 
+    gsap.set(".content-author", {
+      opacity: 0,
+      y: 10,
+    });
+
     const tl = gsap.timeline({
       defaults: {
         ease: "expo.out",
@@ -315,6 +313,15 @@ const { Content } = await art.render();
           duration: 0.8,
         },
         "-=0.5"
+      )
+      .to(
+        ".content-author",
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "<"
       );
   }
 

@@ -3,16 +3,13 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
-const news = articulos
-  .slice(0, 4)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .map((art) => ({
-    slug: art.slug,
-    title: art.data.title,
-    subtitulo: art.data.subtitulo,
-    categoria: art.data.categoria,
-    imagen: art.data.imagen,
-  }));
+const news = articulos.slice(0, 4).map((art) => ({
+  slug: art.slug,
+  title: art.data.title,
+  subtitulo: art.data.subtitulo,
+  categoria: art.data.categoria,
+  imagen: art.data.imagen,
+}));
 ---
 
 <section class="relative w-full h-dvh overflow-hidden py-20">
@@ -29,6 +26,8 @@ const news = articulos
       news.map((article, index) => (
         <img
           data-index={index}
+          data-title={article.title}
+          data-slug={article.slug}
           src={article.imagen}
           alt={article.title}
           class="hero-img absolute inset-0 w-full h-full object-cover"
@@ -147,186 +146,11 @@ const news = articulos
 </section>
 
 <script>
-  import { gsap } from "gsap";
-  import { SplitText } from "gsap/SplitText";
-  import { news } from "../data/NewsList";
-
-  gsap.registerPlugin(SplitText);
-
-  let cleanupHero: (() => void) | null = null;
-
-  let index = 0;
-  let animating = false;
-  let autoplay = true;
-  const AUTOPLAY_DELAY = 5000;
-  let autoplayTimeout: number | null = null;
-
-  function initHero() {
-    const text1 = document.getElementById("text1") as HTMLSpanElement;
-    const text2 = document.getElementById("text2") as HTMLSpanElement;
-    const counter = document.getElementById("counter") as HTMLSpanElement;
-
-    const btnNext = document.getElementById("next") as HTMLButtonElement;
-    const btnPrev = document.getElementById("prev") as HTMLButtonElement;
-    const images = gsap.utils.toArray<HTMLImageElement>(".hero-img");
-    const link = document.getElementById("link") as HTMLAnchorElement;
-
-    const loader = document.getElementById("loader") as HTMLDivElement;
-
-    images.forEach((img, i) => {
-      gsap.set(img, {
-        zIndex: i === 0 ? 2 : 0,
-        clipPath:
-          i === 0
-            ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
-            : "polygon(0 0, 0 0, 0 100%, 0 100%)",
-      });
-    });
-
-    text1.textContent = news[0].title;
-    link.href = `/articulos/${news[0].slug}`;
-
-    gsap.from("#text1", {
-      duration: 0.6,
-      opacity: 0,
-      y: 40,
-      ease: "expo.out",
-    });
-
-    gsap.from([btnPrev, btnNext, ".p-counter", "#link"], {
-      y: 20,
-      opacity: 0.2,
-      duration: 1,
-      stagger: 0.035,
-      ease: "expo.out",
-    });
-
-    function setCounter(i: any) {
-      counter.textContent = String(i + 1).padStart(2, "0");
-    }
-
-    function scheduleAutoplay() {
-      if (!autoplay) return;
-
-      autoplayTimeout = window.setTimeout(() => {
-        animateLoader();
-      }, AUTOPLAY_DELAY / 1000);
-    }
-
-    function animateLoader() {
-      gsap.fromTo(
-        loader,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          duration: AUTOPLAY_DELAY / 1000,
-          ease: "linear",
-          onComplete: () => {
-            goTo((index + 1) % images.length);
-          },
-        }
-      );
-    }
-
-    function stopAutoplay() {
-      autoplay = false;
-
-      if (autoplayTimeout) {
-        clearTimeout(autoplayTimeout);
-        autoplayTimeout = null;
-      }
-
-      gsap.killTweensOf(loader);
-      gsap.set(loader, { scaleY: 0 });
-    }
-
-    setCounter(0);
-    scheduleAutoplay();
-
-    function goTo(nextIndex: number) {
-      if (animating || nextIndex === index) return;
-      animating = true;
-
-      const currentImg = images[index];
-      const nextImg = images[nextIndex];
-      const nextData = news[nextIndex];
-
-      text2.textContent = nextData.title;
-      link.href = `/articulos/${nextData.slug}`;
-
-      gsap.set(nextImg, {
-        zIndex: 3,
-        clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
-      });
-
-      const tl = gsap.timeline({
-        defaults: { duration: 1, ease: "power3.inOut" },
-        onComplete: () => {
-          gsap.set(currentImg, { zIndex: 0 });
-          gsap.set(nextImg, { zIndex: 2 });
-
-          index = nextIndex;
-          animating = false;
-
-          // 👇 REPROGRAMAMOS AUTOPLAY AQUÍ
-          if (autoplay) {
-            scheduleAutoplay();
-          }
-        },
-      });
-
-      tl.to(nextImg, {
-        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-      })
-        .to(
-          currentImg,
-          {
-            clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
-          },
-          0
-        )
-        .fromTo(
-          text2,
-          { opacity: 0, filter: "blur(12px)" },
-          { opacity: 1, filter: "blur(0px)" },
-          0
-        )
-        .to(text1, { opacity: 0, filter: "blur(12px)" }, 0)
-        .add(() => {
-          text1.textContent = nextData.title;
-          setCounter(nextIndex);
-        }, 0.5)
-        .add(() => {
-          gsap.set(text1, { opacity: 1, filter: "blur(0px)" });
-          gsap.set(text2, { opacity: 0 });
-        });
-    }
-
-    btnNext.addEventListener("click", () => {
-      if (animating) return;
-      stopAutoplay();
-      autoplay = true;
-      goTo((index + 1) % images.length);
-    });
-
-    btnPrev.addEventListener("click", () => {
-      if (animating) return;
-      stopAutoplay();
-      autoplay = true;
-      goTo((index - 1 + images.length) % images.length);
-    });
-
-    setCounter(0);
-    animateLoader();
-  }
+  import { initHero } from "../scripts/hero";
 
   document.addEventListener("astro:page-load", () => {
     if (document.querySelector(".hero-img")) {
       initHero();
     }
-  });
-  document.addEventListener("astro:before-swap", () => {
-    cleanupHero?.();
-    cleanupHero = null;
   });
 </script>
