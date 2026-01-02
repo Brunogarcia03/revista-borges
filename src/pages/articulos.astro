@@ -31,7 +31,7 @@ const news = articulos
         >
           <button
             data-category={"todos"}
-            class="category-btn text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
+            class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
           >
             Todos
           </button>
@@ -39,7 +39,7 @@ const news = articulos
             categories.map((cat) => (
               <button
                 data-category={cat}
-                class="category-btn text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
+                class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
               >
                 {cat}
               </button>
@@ -57,7 +57,7 @@ const news = articulos
         news.map((item) => (
           <a
             href={`/articulos/${item.slug}`}
-            class="article-item"
+            class="article-item-page"
             data-category={item.categoria}
           >
             <article class="relative group">
@@ -87,50 +87,54 @@ const news = articulos
 </Layout>
 
 <script is:inline>
-  const buttons = document.querySelectorAll(".category-btn");
-  const articles = document.querySelectorAll(".article-item");
+  function initCategoryFilter() {
+    const buttons = document.querySelectorAll(".category-btn-page");
+    const articles = document.querySelectorAll(".article-item-page");
 
-  let activeCategory = "todos";
+    if (!buttons.length || !articles.length) return;
 
-  const setActiveButton = (activeBtn) => {
-    buttons.forEach((btn) => {
-      btn.classList.remove("bg-black", "text-white");
-      btn.classList.add("bg-transparent", "text-black");
-    });
+    const setActiveButton = (activeBtn) => {
+      buttons.forEach((btn) => {
+        btn.classList.remove("bg-black", "text-white");
+        btn.classList.add("bg-transparent", "text-black");
+      });
 
-    activeBtn.classList.remove("bg-transparent", "text-black");
-    activeBtn.classList.add("bg-black", "text-white");
-  };
+      activeBtn.classList.remove("bg-transparent", "text-black");
+      activeBtn.classList.add("bg-black", "text-white");
+    };
 
-  const showAllArticles = () => {
-    articles.forEach((article) => {
-      article.style.display = "";
-    });
-  };
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const category = btn.dataset.category;
-
-      activeCategory = category;
-      setActiveButton(btn);
-
-      if (category === "todos") {
-        showAllArticles();
-        return;
-      }
-
+    const showAllArticles = () => {
       articles.forEach((article) => {
-        article.style.display =
-          article.dataset.category === category ? "" : "none";
+        article.style.display = "";
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const category = btn.dataset.category;
+
+        setActiveButton(btn);
+
+        if (category === "todos") {
+          showAllArticles();
+          return;
+        }
+
+        articles.forEach((article) => {
+          article.style.display =
+            article.dataset.category === category ? "" : "none";
+        });
       });
     });
-  });
 
-  // Estado inicial
-  const defaultBtn = document.querySelector('[data-category="todos"]');
-  if (defaultBtn) {
-    setActiveButton(defaultBtn);
-    showAllArticles();
+    // Estado inicial
+    const defaultBtn = document.querySelector('[data-category="todos"]');
+    if (defaultBtn) {
+      setActiveButton(defaultBtn);
+      showAllArticles();
+    }
   }
+
+  // Astro transitions hook
+  document.addEventListener("astro:page-load", initCategoryFilter);
 </script>
