@@ -83,7 +83,7 @@ const { Content } = await art.render();
         />
       </div>
       <article
-        class="max-w-none w-full mt-4 sm:mt-8 sm:max-w-2xl md:max-w-3xl lg:max-w-5xl prose-invert mx-auto prose-lg sm:prose-lg md:prose-xl"
+        class="content-article relative prose dark:prose-invert max-w-none md:max-w-4xl mx-auto max-[690px]:px-2 px-4 py-4 w-full prose-video:mx-auto prose-video:rounded-[10px] prose-video:w-full prose-hr:my-2 prose-blockquote:leading-5 prose-blockquote:text-neutral-600 dark:prose-blockquote:text-neutral-400 prose-img:w-auto prose-img:mx-auto prose-img:rounded-[10px] prose-img:max-h-80"
       >
         <Content />
       </article>
@@ -254,6 +254,11 @@ const { Content } = await art.render();
       y: 10,
     });
 
+    gsap.set(".content-article", {
+      opacity: 0,
+      y: 10,
+    });
+
     const tl = gsap.timeline({
       defaults: {
         ease: "expo.out",
@@ -298,6 +303,15 @@ const { Content } = await art.render();
         {
           opacity: 1,
           scale: 1,
+          duration: 0.8,
+        },
+        "-=0.5"
+      )
+      .to(
+        ".content-article",
+        {
+          opacity: 1,
+          y: 0,
           duration: 0.8,
         },
         "-=0.5"

@@ -75,7 +75,7 @@ h1 {
   overflow-x: auto;
 }
 
-/* WebKit (Chrome, Edge, Safari) */
+/* WebKit */
 .container-category::-webkit-scrollbar {
   height: 1px;
   border-radius: 999px;
@@ -85,13 +85,25 @@ h1 {
   background: transparent;
 }
 
-.container-category::-webkit-scrollbar-thumb {
+/* Firefox */
+.container-category {
+  scrollbar-width: thin;
+}
+
+.container-category--dark::-webkit-scrollbar-thumb {
   background-color: white;
   border-radius: 999px;
 }
 
-/* Firefox */
-.container-category {
-  scrollbar-width: thin;
+.container-category--dark {
   scrollbar-color: white transparent;
+}
+
+.container-category--light::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 999px;
+}
+
+.container-category--light {
+  scrollbar-color: black transparent;
 }
