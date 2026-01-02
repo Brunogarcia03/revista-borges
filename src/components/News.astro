@@ -1,5 +1,19 @@
 ---
-import { news } from "../data/NewsList";
+import { getCollection } from "astro:content";
+
+const articulos = await getCollection("articulos");
+
+const categories = ["Literatura", "Historia", "Política", "Nosotros", "Arte"];
+
+const news = articulos
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map((art) => ({
+    slug: art.slug,
+    title: art.data.title,
+    subtitulo: art.data.subtitulo,
+    categoria: art.data.categoria,
+    imagen: art.data.imagen,
+  }));
 ---
 
 <section class="pt-16 md:pt-24 bg-neutral-800 text-white">
@@ -7,17 +21,27 @@ import { news } from "../data/NewsList";
     <p class="uppercase text-[.8rem] md:text-[1rem] leading-[1.1em]">
       Filtrar por
     </p>
-    <div class="flex pb-1 items-center mt-2 md:mt-4 gap-2 md:gap-4">
+    <div
+      class="container-category scroll-x-auto flex pb-2 pr-2 items-center mt-2 md:mt-4 gap-2 md:gap-4"
+    >
       <button
-        class="text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-white rounded-[.2rem] cursor-pointer hover:bg-white hover:text-black duration-300 transition-colors"
-        >Literatura</button
+        data-category={"todos"}
+        class="category-btn text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-white rounded-[.2rem] cursor-pointer hover:bg-white hover:text-black duration-300 transition-colors"
       >
-      <button
-        class="text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-white rounded-[.2rem] cursor-pointer hover:bg-white hover:text-black duration-300 transition-colors"
-        >Historia</button
-      >
+        Todos
+      </button>
+      {
+        categories.map((cat) => (
+          <button
+            data-category={cat}
+            class="category-btn text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-white rounded-[.2rem] cursor-pointer hover:bg-white hover:text-black duration-300 transition-colors"
+          >
+            {cat}
+          </button>
+        ))
+      }
     </div>
-    <div class="w-full border-t-2 border-dashed border-white mt-4 md:mt-7">
+    <div class="w-full border-t-2 border-dashed border-white mt-3 md:mt-5">
     </div>
   </div>
   <div
@@ -25,7 +49,11 @@ import { news } from "../data/NewsList";
   >
     {
       news.map((item) => (
-        <a href={`/articulos/${item.slug}`} class="">
+        <a
+          href={`/articulos/${item.slug}`}
+          class="article-item"
+          data-category={item.categoria}
+        >
           <article class="relative group">
             <div class="absolute right-0 top-0 z-1 px-3 py-1 bg-amber-300 uppercase font-heading font-bold text-xs">
               {item.categoria}
@@ -64,3 +92,54 @@ import { news } from "../data/NewsList";
     </defs>
   </svg>
 </section>
+
+<script is:inline>
+  const buttons = document.querySelectorAll(".category-btn");
+  const articles = document.querySelectorAll(".article-item");
+
+  let activeCategory = "todos";
+
+  const setActiveButton = (activeBtn) => {
+    buttons.forEach((btn) => btn.classList.remove("bg-white", "text-black"));
+    activeBtn.classList.add("bg-white", "text-black");
+  };
+
+  const showAllArticles = () => {
+    articles.forEach((article) => {
+      article.style.display = "";
+    });
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const category = btn.dataset.category;
+
+      activeCategory = category;
+      setActiveButton(btn);
+
+      // Caso TODOS
+      if (category === "todos") {
+        showAllArticles();
+        return;
+      }
+
+      // Filtrado por categoría
+      articles.forEach((article) => {
+        const artCategory = article.dataset.category;
+
+        if (artCategory === category) {
+          article.style.display = "";
+        } else {
+          article.style.display = "none";
+        }
+      });
+    });
+  });
+
+  // Estado inicial: Todos activo
+  const defaultBtn = document.querySelector('[data-category="todos"]');
+  if (defaultBtn) {
+    setActiveButton(defaultBtn);
+    showAllArticles();
+  }
+</script>

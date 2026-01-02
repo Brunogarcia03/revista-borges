@@ -28,7 +28,14 @@ export const collections = {
       subtitulo: z.string(),
       autores: z.array(z.string()),
       date: z.date(),
-      categoria: z.string(),
+      categoria: z.enum([
+        "Literatura",
+        "Historia",
+        "Política",
+        "Nosotros",
+        "Arte",
+      ]),
+
       imagen: z.string(),
     }),
   }),

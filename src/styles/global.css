@@ -70,3 +70,28 @@ h1 {
   filter: url(#threshold);
   will-change: transform;
 }
+
+.container-category {
+  overflow-x: auto;
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+.container-category::-webkit-scrollbar {
+  height: 1px;
+  border-radius: 999px;
+}
+
+.container-category::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container-category::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 999px;
+}
+
+/* Firefox */
+.container-category {
+  scrollbar-width: thin;
+  scrollbar-color: white transparent;
+}

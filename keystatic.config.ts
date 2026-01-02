@@ -76,8 +76,16 @@ export default config({
           label: "Fecha",
         }),
 
-        categoria: fields.text({
+        categoria: fields.select({
           label: "Categoría",
+          defaultValue: "Literatura",
+          options: [
+            { label: "Literatura", value: "Literatura" },
+            { label: "Historia", value: "Historia" },
+            { label: "Política", value: "Política" },
+            { label: "Nosotros", value: "Nosotros" },
+            { label: "Arte", value: "Arte" },
+          ],
         }),
 
         imagen: fields.image({

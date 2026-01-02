@@ -6,6 +6,8 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
+const categories = ["Literatura", "Historia", "Política", "Nosotros", "Arte"];
+
 const news = articulos
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .map((art) => ({
@@ -24,39 +26,27 @@ const news = articulos
         <p class="uppercase text-[.8rem] md:text-[1rem] leading-[1.1em]">
           Filtrar por
         </p>
-        <div class="relative flex items-center justify-between mt-2">
-          <div
-            class="flex w-full pb-1 pr-2 items-center md:mt-4 gap-2 md:gap-4"
+        <div
+          class="container-category scroll-x-auto flex pb-2 pr-2 items-center mt-2 md:mt-4 gap-2 md:gap-4"
+        >
+          <button
+            data-category={"todos"}
+            class="category-btn text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
           >
-            <button
-              class="text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
-              >Literatura</button
-            >
-            <button
-              class="text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
-              >Historia</button
-            >
-          </div>
-          <h6
-            style="filter: url(#threshold)"
-            class="font-heading font-bold text-5xl"
-          >
-            {news.length}
-          </h6>
-          <svg class="absolute w-0 h-0">
-            <defs>
-              <filter id="threshold">
-                <feColorMatrix
-                  in="SourceGraphic"
-                  type="matrix"
-                  values=" 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140 "
-                ></feColorMatrix>
-              </filter>
-            </defs>
-          </svg>
+            Todos
+          </button>
+          {
+            categories.map((cat) => (
+              <button
+                data-category={cat}
+                class="category-btn text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
+              >
+                {cat}
+              </button>
+            ))
+          }
         </div>
-
-        <div class="w-full border-t-2 border-dashed border-black mt-2 md:mt-4">
+        <div class="w-full border-t-2 border-dashed border-black mt-3 md:mt-5">
         </div>
       </div>
     </section>
@@ -65,7 +55,11 @@ const news = articulos
     >
       {
         news.map((item) => (
-          <a href={`/articulos/${item.slug}`} class="">
+          <a
+            href={`/articulos/${item.slug}`}
+            class="article-item"
+            data-category={item.categoria}
+          >
             <article class="relative group">
               <div class="absolute right-0 top-0 rounded-tr-[.2rem] z-1 px-3 py-1 bg-amber-300 uppercase font-heading font-bold text-xs">
                 {item.categoria}
@@ -91,3 +85,52 @@ const news = articulos
     <Footer black={false} />
   </main>
 </Layout>
+
+<script is:inline>
+  const buttons = document.querySelectorAll(".category-btn");
+  const articles = document.querySelectorAll(".article-item");
+
+  let activeCategory = "todos";
+
+  const setActiveButton = (activeBtn) => {
+    buttons.forEach((btn) => {
+      btn.classList.remove("bg-black", "text-white");
+      btn.classList.add("bg-transparent", "text-black");
+    });
+
+    activeBtn.classList.remove("bg-transparent", "text-black");
+    activeBtn.classList.add("bg-black", "text-white");
+  };
+
+  const showAllArticles = () => {
+    articles.forEach((article) => {
+      article.style.display = "";
+    });
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const category = btn.dataset.category;
+
+      activeCategory = category;
+      setActiveButton(btn);
+
+      if (category === "todos") {
+        showAllArticles();
+        return;
+      }
+
+      articles.forEach((article) => {
+        article.style.display =
+          article.dataset.category === category ? "" : "none";
+      });
+    });
+  });
+
+  // Estado inicial
+  const defaultBtn = document.querySelector('[data-category="todos"]');
+  if (defaultBtn) {
+    setActiveButton(defaultBtn);
+    showAllArticles();
+  }
+</script>

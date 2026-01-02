@@ -89,7 +89,14 @@ const { Content } = await art.render();
       </article>
       {
         authors.map((author) => (
-          <div class="flex items-center justify-end gap-4 mt-8 w-full max-w-5xl mx-auto">
+          <div class="flex items-end justify-end gap-4 mt-8 w-full max-w-5xl mx-auto">
+            <div class="relative w-16 h-16 rounded-[.2rem]">
+              <img
+                src={author?.data.avatar}
+                class="absolute inset-0 w-full h-full object-cover rounded-[.2rem]"
+                alt={author?.data.name}
+              />
+            </div>
             <div class="flex flex-col text-right">
               <p class="font-bold">{author?.data.name}</p>
 

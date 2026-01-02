@@ -1,5 +1,18 @@
 ---
-import { news } from "../data/NewsList";
+import { getCollection } from "astro:content";
+
+const articulos = await getCollection("articulos");
+
+const news = articulos
+  .slice(0, 4)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map((art) => ({
+    slug: art.slug,
+    title: art.data.title,
+    subtitulo: art.data.subtitulo,
+    categoria: art.data.categoria,
+    imagen: art.data.imagen,
+  }));
 ---
 
 <section class="relative w-full h-dvh overflow-hidden py-20">
