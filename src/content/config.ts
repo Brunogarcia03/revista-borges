@@ -37,6 +37,7 @@ export const collections = {
       ]),
 
       imagen: z.string(),
+      responsive: z.string().optional(),
     }),
   }),
 };

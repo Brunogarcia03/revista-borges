@@ -3,19 +3,23 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
-const news = articulos.slice(0, 4).map((art) => ({
-  slug: art.slug,
-  title: art.data.title,
-  subtitulo: art.data.subtitulo,
-  categoria: art.data.categoria,
-  imagen: art.data.imagen,
-}));
+const news = articulos
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 4)
+  .map((art) => ({
+    slug: art.slug,
+    title: art.data.title,
+    subtitulo: art.data.subtitulo,
+    categoria: art.data.categoria,
+    imagen: art.data.imagen,
+    responsive: art.data.responsive,
+  }));
 ---
 
 <section class="relative w-full h-dvh overflow-hidden py-20">
   <div
     id="loader"
-    class="absolute left-0 top-0 w-1.25 h-full bg-black z-40 origin-top scale-y-0"
+    class="absolute left-0 top-0 w-0.5 sm:w-1.25 h-full bg-black z-40 origin-top scale-y-0"
   >
   </div>
   <div class="absolute left-0 top-0 w-full h-dvh bg-black/15 z-10"></div>
@@ -24,14 +28,22 @@ const news = articulos.slice(0, 4).map((art) => ({
   >
     {
       news.map((article, index) => (
-        <img
+        <picture
           data-index={index}
           data-title={article.title}
           data-slug={article.slug}
-          src={article.imagen}
-          alt={article.title}
-          class="hero-img absolute inset-0 w-full h-full object-cover"
-        />
+          class="hero-img absolute inset-0 w-full h-full"
+        >
+          {" "}
+          {article.responsive && (
+            <source srcset={article.responsive} media="(max-width: 768px)" />
+          )}{" "}
+          <img
+            src={article.imagen}
+            alt={article.title}
+            class="w-full h-full object-cover"
+          />{" "}
+        </picture>
       ))
     }
   </div>

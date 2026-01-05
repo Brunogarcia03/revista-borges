@@ -93,7 +93,12 @@ export default config({
           directory: "public/uploads",
           publicPath: "/uploads",
         }),
-
+        responsive: fields.image({
+          label: "Imagen (responsive)",
+          directory: "public/uploads",
+          publicPath: "/uploads",
+          validation: { isRequired: false },
+        }),
         autores: fields.array(
           fields.relationship({
             label: "autor",
