@@ -10,6 +10,9 @@ export function initHero() {
   const AUTOPLAY_DELAY = 5000;
   let autoplayTimeout: number | null = null;
 
+  const containerMorph = document.getElementById(
+    "morph-container"
+  ) as HTMLAnchorElement;
   const text1 = document.getElementById("text1") as HTMLSpanElement;
   const text2 = document.getElementById("text2") as HTMLSpanElement;
   const counter = document.getElementById("counter") as HTMLSpanElement;
@@ -42,6 +45,7 @@ export function initHero() {
   const currentData = imagesData[index];
   text1.textContent = currentData?.title || "";
   link.href = `/articulos/${currentData?.slug}`;
+  containerMorph.href = `/articulos/${currentData?.slug}`;
 
   gsap.from(text1, {
     duration: 0.6,
@@ -100,6 +104,7 @@ export function initHero() {
 
     text2.textContent = nextData?.title || "";
     link.href = `/articulos/${nextData?.slug}`;
+    containerMorph.href = `/articulos/${nextData?.slug}`;
 
     gsap.set(nextImg, {
       zIndex: 3,
