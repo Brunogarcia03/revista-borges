@@ -1,9 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const trustedBy = ["Nike", "Prada", "Google", "Lacoste", "Rabanne", "Vogue"];
+const trustedBy = [
+  "LaSerenisima",
+  "YPF",
+  "Globant",
+  "Mercado Libre",
+  "Quilmes",
+];
 
-const press = ["Vogue Italia", "Highsnobiety", "Paper Magazine", "Libération"];
+const press = ["La Nación", "Infobae", "Clarin", "Perfil"];
 
 const services = [
   "Ensayo",
@@ -26,7 +32,7 @@ const contact = [
     <!-- Texto principal -->
     <section class="mx-3 sm:mx-5 space-y-4 z-20">
       <p
-        class="split text-lg sm:text-xl md:text-2xl leading-5 md:leading-7 font-bold max-w-5xl text-pretty z-20 mix-blend-difference text-black"
+        class="split text-lg sm:text-xl md:text-2xl leading-5 md:leading-7 font-bold max-w-5xl text-pretty z-20"
       >
         1. Somos una publicación independiente que entiende la libre expresión
         como un bien fundamental. Defendemos la palabra, la imagen y la idea
@@ -170,23 +176,15 @@ const contact = [
   import img3 from "../assets/simulations/img3.webp";
   import img4 from "../assets/simulations/img4.webp";
   import img5 from "../assets/simulations/img5.webp";
-  import img6 from "../assets/simulations/img6.webp";
 
-  import services1 from "../assets/photos/services1.jpg";
-  import services2 from "../assets/photos/services2.jpg";
-  import services3 from "../assets/photos/services3.jpg";
-  import services4 from "../assets/photos/services4.jpg";
+  import services1 from "../assets/photos/services1.webp";
+  import services2 from "../assets/photos/services2.webp";
+  import services3 from "../assets/photos/services3.webp";
+  import services4 from "../assets/photos/services4.webp";
 
   gsap.registerPlugin(SplitText);
 
-  const trustedImgs = [
-    img1.src,
-    img2.src,
-    img3.src,
-    img4.src,
-    img5.src,
-    img6.src,
-  ];
+  const trustedImgs = [img1.src, img5.src, img2.src, img3.src, img4.src];
 
   const servicesImgs = [
     services1.src,
@@ -211,7 +209,7 @@ const contact = [
 
     gsap.to(img, {
       opacity: 0,
-      duration: 0.4,
+      duration: 0.8,
       ease: "power1.out",
       onComplete: () => wrapper.remove(),
     });
@@ -247,7 +245,7 @@ const contact = [
 
         gsap.to(wrapper, {
           clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-          duration: 0.5,
+          duration: 0.8,
           ease: "power3.inOut",
         });
 
