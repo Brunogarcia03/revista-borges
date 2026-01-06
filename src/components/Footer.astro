@@ -26,12 +26,13 @@ const { black = true } = Astro.props;
         >
           Pensar el presente. Publicar sin concesiones.
         </h3>
-        <button
-          class="flex justify-end w-full max-w-xs md:max-w-sm group cursor-pointer"
+        <a
+          href="mailto:brunogalberti@gmail.com"
+          class="flex justify-end text-center w-full max-w-xs md:max-w-sm group cursor-pointer"
           ><span
             class={`w-full max-w-md md:max-w-lg py-2 rounded-[.2rem]  border border-dashed border-transparent group-hover:bg-transparent ${black ? "bg-white text-black group-hover:border-white group-hover:text-white" : "bg-black text-white group-hover:border-black group-hover:text-black"} transition-colors duration-300`}
             >Proponer una colaboración</span
-          ></button
+          ></a
         >
       </div>
     </div>
