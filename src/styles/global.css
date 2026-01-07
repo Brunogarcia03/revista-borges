@@ -22,7 +22,7 @@
 @font-face {
   font-family: "Oswald Variable";
   font-style: normal;
-  font-display: auto;
+  font-display: swap;
   font-weight: 200 700;
   src: url(@fontsource-variable/oswald/files/oswald-latin-wght-normal.woff2)
     format("woff2-variations");

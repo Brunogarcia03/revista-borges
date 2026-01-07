@@ -94,8 +94,19 @@ const url = canonical ?? "https://revista-borges.vercel.app";
     return lenis;
   }
 
-  document.addEventListener("astro:page-load", initLenis());
+  document.addEventListener("astro:page-load", () => {
+    initLenis();
+  });
+
   document.addEventListener("astro:after-swap", () => {
-    lenis?.scrollTo(0, { immediate: true });
+    if (!lenis) return;
+
+    // Volver arriba
+    lenis.scrollTo(0, { immediate: true });
+
+    // Esperar al nuevo DOM
+    requestAnimationFrame(() => {
+      lenis.resize();
+    });
   });
 </script>

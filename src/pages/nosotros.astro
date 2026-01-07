@@ -19,7 +19,7 @@ const services = [
 ];
 
 const contact = [
-  { label: "Email", value: "hello@studio.com" },
+  { label: "Email", value: "revistaparrhesia@gmail.com" },
   { label: "Instagram", value: "Instagram" },
   { label: "Youtube", value: "Youtube" },
 ];
@@ -66,14 +66,16 @@ const contact = [
       >
         <!-- Confían -->
         <article class="max-w-xs appearance">
-          <span class="text-neutral-700 uppercase font-heading text-sm">
+          <span class="text-neutral-700 uppercase font-heading text-base">
             Confían en nosotros
           </span>
-          <ul class="mt-1 text-sm leading-relaxed clients-list">
+          <ul class="mt-1 text-base leading-relaxed clients-list">
             {
               trustedBy.map((item, i) => (
-                <li class="client-name text-pretty inline relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-100 after:bg-neutral-800 after:transition-transform after:duration-150 after:ease-in-out hover:after:origin-bottom-right hover:after:scale-x-0 mr-1.5 cursor-pointer">
-                  {`${item}${i < trustedBy.length - 1 ? "," : "."}`}
+                <li class="client-name text-pretty inline">
+                  <span class="text-nowrap relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-100 after:bg-neutral-800 after:transition-transform after:duration-150 after:ease-in-out hover:after:origin-bottom-right hover:after:scale-x-0 mr-1.5 cursor-pointer">
+                    {`${item}${i < trustedBy.length - 1 ? "," : "."}`}
+                  </span>
                 </li>
               ))
             }
@@ -81,10 +83,10 @@ const contact = [
         </article>
         <!-- Prensa -->
         <article class="appearance">
-          <span class="text-neutral-600 uppercase font-heading text-sm">
+          <span class="text-neutral-600 uppercase font-heading text-base">
             Prensa
           </span>
-          <ul class="mt-1 text-sm leading-relaxed">
+          <ul class="mt-1 text-base leading-relaxed">
             {
               press.map((item, i) => (
                 <li class="inline cursor-pointer mr-1.5 hover:text-amber-300 transition-colors duration-300">
@@ -97,10 +99,10 @@ const contact = [
 
         <!-- Servicios -->
         <article class="appearance">
-          <span class="text-neutral-700 uppercase font-heading text-sm">
+          <span class="text-neutral-700 uppercase font-heading text-base">
             Servicios
           </span>
-          <ul class="mt-1 text-sm leading-relaxed text-balance">
+          <ul class="mt-1 text-base leading-relaxed text-balance">
             {
               services.map((item, i) => (
                 <li class="service-name inline mr-1.5 relative after:absolute after:bottom-0 after:left-0 after:h-px after:bg-black after:w-full after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 cursor-pointer">
@@ -115,10 +117,10 @@ const contact = [
 
         <!-- Contacto -->
         <article class="appearance max-w-sm">
-          <span class="text-neutral-700 uppercase font-heading text-sm">
+          <span class="text-neutral-700 uppercase font-heading text-base">
             Contacto
           </span>
-          <ul class="mt-1 text-sm leading-relaxed cursor-pointer">
+          <ul class="mt-1 text-base leading-relaxed cursor-pointer">
             {
               contact.map((item) => (
                 <li class="hover:text-amber-300 transition-colors duration-300">
@@ -199,6 +201,13 @@ const contact = [
   let activeWrapper: any = null;
   let activeImg: any = null;
 
+  function preloadImages(urls: string[]) {
+    urls.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }
+
   function clearActiveImage() {
     if (!activeImg || !activeWrapper) return;
 
@@ -264,6 +273,9 @@ const contact = [
   }
 
   function initPageAnimations() {
+    preloadImages(trustedImgs);
+    preloadImages(servicesImgs);
+
     initHoverImages(".client-name", trustedImgs);
     initHoverImages(".service-name", servicesImgs);
 
