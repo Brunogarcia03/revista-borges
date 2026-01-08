@@ -98,7 +98,7 @@ const news = articulos
     const buttons = document.querySelectorAll(".category-btn");
     const articles = document.querySelectorAll(".article-item");
 
-    if (!buttons.length || !articles.length) return;
+    const lenis = window.lenis;
 
     const setActiveButton = (activeBtn) => {
       buttons.forEach((btn) => {
@@ -120,6 +120,10 @@ const news = articulos
       btn.addEventListener("click", () => {
         const category = btn.dataset.category;
 
+        requestAnimationFrame(() => {
+          lenis.resize();
+        });
+
         setActiveButton(btn);
 
         if (category === "todos") {
@@ -130,6 +134,12 @@ const news = articulos
         articles.forEach((article) => {
           article.style.display =
             article.dataset.category === category ? "" : "none";
+        });
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            lenis.resize();
+          });
         });
       });
     });

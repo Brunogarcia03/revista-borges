@@ -91,6 +91,8 @@ const url = canonical ?? "https://revista-borges.vercel.app";
       autoRaf: true,
     });
 
+    window.lenis = lenis;
+
     return lenis;
   }
 
@@ -106,7 +108,9 @@ const url = canonical ?? "https://revista-borges.vercel.app";
 
     // Esperar al nuevo DOM
     requestAnimationFrame(() => {
-      lenis.resize();
+      requestAnimationFrame(() => {
+        lenis.resize();
+      });
     });
   });
 </script>
