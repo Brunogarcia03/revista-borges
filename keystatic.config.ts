@@ -10,6 +10,27 @@ export default config({
   },
 
   collections: {
+    categorias: collection({
+      label: "Categorías",
+      slugField: "slug",
+      path: "src/content/categorias/*",
+      schema: {
+        name: fields.text({
+          label: "Nombre",
+        }),
+
+        slug: fields.slug({
+          name: { label: "slug" },
+        }),
+
+        descripcion: fields.text({
+          label: "Descripción",
+          multiline: true,
+          validation: { isRequired: false },
+        }),
+      },
+    }),
+
     autores: collection({
       label: "Autores",
       slugField: "name",
@@ -76,17 +97,16 @@ export default config({
           label: "Fecha",
         }),
 
-        categoria: fields.select({
-          label: "Categoría",
-          defaultValue: "Literatura",
-          options: [
-            { label: "Literatura", value: "Literatura" },
-            { label: "Historia", value: "Historia" },
-            { label: "Política", value: "Política" },
-            { label: "Nosotros", value: "Nosotros" },
-            { label: "Arte", value: "Arte" },
-          ],
-        }),
+        categorias: fields.array(
+          fields.relationship({
+            label: "Categoría",
+            collection: "categorias",
+          }),
+          {
+            label: "Categorías",
+            itemLabel: (item) => item.value ?? "Categoría",
+          }
+        ),
 
         imagen: fields.image({
           label: "Imagen",

@@ -21,6 +21,15 @@ export const collections = {
     }),
   }),
 
+  categorias: defineCollection({
+    type: "data",
+    schema: z.object({
+      name: z.string(),
+      slug: z.string(),
+      descripcion: z.string(),
+    }),
+  }),
+
   articulos: defineCollection({
     type: "content",
     schema: z.object({
@@ -28,14 +37,7 @@ export const collections = {
       subtitulo: z.string(),
       autores: z.array(z.string()),
       date: z.date(),
-      categoria: z.enum([
-        "Literatura",
-        "Historia",
-        "Política",
-        "Nosotros",
-        "Arte",
-      ]),
-
+      categorias: z.array(z.string()),
       imagen: z.string(),
       responsive: z.string().optional(),
     }),
