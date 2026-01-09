@@ -5,7 +5,6 @@ import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
-
 const categories = await getCollection("categorias");
 
 const news = articulos
@@ -14,7 +13,7 @@ const news = articulos
     slug: art.slug,
     title: art.data.title,
     subtitulo: art.data.subtitulo,
-    categorias: art.data.categorias,
+    categorias: Array.isArray(art.data.categorias) ? art.data.categorias : [],
     imagen: art.data.imagen,
   }));
 ---
@@ -38,7 +37,7 @@ const news = articulos
           {
             categories.map((cat) => (
               <button
-                data-category={cat.data.slug}
+                data-category={cat.id}
                 class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors capitalize"
               >
                 {cat.data.slug}
@@ -58,7 +57,9 @@ const news = articulos
           <a
             href={`/articulos/${item.slug}`}
             class="article-item-page"
-            data-categories={item.categorias.join(",")}
+            data-categories={
+              item.categorias.length ? item.categorias.join(",") : ""
+            }
           >
             <article class="relative group">
               <div class="absolute right-0 top-0 rounded-tr-[.2rem] z-1 px-3 py-1 bg-amber-300 uppercase font-heading font-bold text-xs">
