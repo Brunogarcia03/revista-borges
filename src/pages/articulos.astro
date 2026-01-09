@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
-const categories = ["Literatura", "Historia", "Política", "Nosotros", "Arte"];
+const categories = await getCollection("categorias");
 
 const news = articulos
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -14,7 +14,7 @@ const news = articulos
     slug: art.slug,
     title: art.data.title,
     subtitulo: art.data.subtitulo,
-    categoria: art.data.categoria,
+    categorias: art.data.categorias,
     imagen: art.data.imagen,
   }));
 ---
@@ -38,10 +38,10 @@ const news = articulos
           {
             categories.map((cat) => (
               <button
-                data-category={cat}
-                class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
+                data-category={cat.data.slug}
+                class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors capitalize"
               >
-                {cat}
+                {cat.data.slug}
               </button>
             ))
           }
@@ -58,11 +58,11 @@ const news = articulos
           <a
             href={`/articulos/${item.slug}`}
             class="article-item-page"
-            data-category={item.categoria}
+            data-categories={item.categorias.join(",")}
           >
             <article class="relative group">
               <div class="absolute right-0 top-0 rounded-tr-[.2rem] z-1 px-3 py-1 bg-amber-300 uppercase font-heading font-bold text-xs">
-                {item.categoria}
+                {item.categorias[0]}
               </div>
               <div class="overflow-hidden rounded-[.2rem]">
                 <img
@@ -121,8 +121,11 @@ const news = articulos
         }
 
         articles.forEach((article) => {
-          article.style.display =
-            article.dataset.category === category ? "" : "none";
+          const categories = article.dataset.categories
+            ?.split(",")
+            .map((c) => c.trim());
+
+          article.style.display = categories?.includes(category) ? "" : "none";
         });
       });
     });

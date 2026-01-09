@@ -24,7 +24,6 @@ export const collections = {
   categorias: defineCollection({
     type: "data",
     schema: z.object({
-      name: z.string(),
       slug: z.string(),
       descripcion: z.string(),
     }),

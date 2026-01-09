@@ -15,12 +15,8 @@ export default config({
       slugField: "slug",
       path: "src/content/categorias/*",
       schema: {
-        name: fields.text({
-          label: "Nombre",
-        }),
-
         slug: fields.slug({
-          name: { label: "slug" },
+          name: { label: "Categoría" },
         }),
 
         descripcion: fields.text({
