@@ -4,6 +4,7 @@
 @theme {
   --font-sans: "Lato";
   --font-heading: "Oswald Variable";
+  --font-content: "Spectral", serif;
 }
 
 @font-face {
