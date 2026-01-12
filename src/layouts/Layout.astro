@@ -81,19 +81,33 @@ const url = canonical ?? "https://revista-borges.vercel.app";
 
   let lenis: any;
 
+  function isDesktop() {
+    return (
+      window.matchMedia("(pointer: fine)").matches &&
+      window.matchMedia("(hover: hover)").matches
+    );
+  }
+
   function initLenis() {
+    if (!isDesktop()) return;
     if (lenis) return lenis;
 
     lenis = new Lenis({
       lerp: 0.5,
       duration: 1.5,
       smoothWheel: true,
+      syncTouch: false,
       autoRaf: true,
     });
 
     window.lenis = lenis;
-
     return lenis;
+  }
+
+  function destroyLenis() {
+    if (!lenis) return;
+    lenis.destroy();
+    lenis = null;
   }
 
   document.addEventListener("astro:page-load", () => {
@@ -101,12 +115,15 @@ const url = canonical ?? "https://revista-borges.vercel.app";
   });
 
   document.addEventListener("astro:after-swap", () => {
-    if (!lenis) return;
+    if (!isDesktop()) {
+      destroyLenis();
+      return;
+    }
 
-    // Volver arriba
+    if (!lenis) initLenis();
+
     lenis.scrollTo(0, { immediate: true });
 
-    // Esperar al nuevo DOM
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         lenis.resize();
