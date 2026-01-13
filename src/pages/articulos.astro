@@ -29,7 +29,7 @@ const news = articulos
           class="container-category container-category--light scroll-x-auto flex pb-2 pr-2 items-center mt-2 md:mt-4 gap-2 md:gap-4"
         >
           <button
-            data-category={"todos"}
+            data-category={"art-todos"}
             class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors"
           >
             Todos
@@ -116,7 +116,7 @@ const news = articulos
 
         setActiveButton(btn);
 
-        if (category === "todos") {
+        if (category === "art-todos") {
           showAllArticles();
           return;
         }
@@ -132,7 +132,7 @@ const news = articulos
     });
 
     // Estado inicial
-    const defaultBtn = document.querySelector('[data-category="todos"]');
+    const defaultBtn = document.querySelector('[data-category="art-todos"]');
     if (defaultBtn) {
       setActiveButton(defaultBtn);
       showAllArticles();
