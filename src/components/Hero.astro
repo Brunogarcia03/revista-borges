@@ -4,7 +4,12 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
-const destacados = [articulos[3], articulos[0], articulos[1], articulos[5]];
+const destacados = [
+  articulos[3],
+  articulos[0],
+  articulos[1],
+  articulos[5],
+].filter(Boolean);
 
 const news = destacados.map((art) => ({
   slug: art.slug,
