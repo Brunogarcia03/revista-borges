@@ -4,13 +4,15 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
-console.log(articulos.map((n) => n.slug));
+const HERO_SLUGS = [
+  "nuestro-nombre",
+  "las-infinitas-metaforas-del-amor",
+  "sic-semper-tyrannis",
+  "aceptacion-de-mi-persona",
+];
 
-const indices = [3, 0, 1, 5];
-
-const news = indices
-  .map((i) => articulos[i])
-  .filter(Boolean)
+const news = articulos
+  .filter((art) => HERO_SLUGS.includes(art.slug))
   .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
   .map((art) => ({
     slug: art.slug,
