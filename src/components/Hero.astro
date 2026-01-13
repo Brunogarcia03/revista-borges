@@ -1,4 +1,5 @@
 ---
+import Image from "astro/components/Image.astro";
 import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
@@ -38,11 +39,27 @@ const news = articulos
           {article.responsive && (
             <source srcset={article.responsive} media="(max-width: 768px)" />
           )}{" "}
-          <img
+          <Image
             src={article.imagen}
+            width={768}
+            height={1080}
             alt={article.title}
-            class="w-full h-full object-cover"
-          />{" "}
+            class="w-full h-full object-cover hidden md:block"
+          />
+          <Image
+            src={article.imagen}
+            width={640}
+            height={1080}
+            alt={article.title}
+            class="w-full h-full object-cover hidden sm:block md:hidden"
+          />
+          <Image
+            src={article.imagen}
+            width={1920}
+            height={1080}
+            alt={article.title}
+            class="w-full h-full object-cover block sm:hidden"
+          />
         </picture>
       ))
     }
@@ -90,19 +107,25 @@ const news = articulos
     </div>
     <a
       id="morph-container"
+      href={`/articulos/${news[0].slug}`}
+      aria-label={`Leer artículo: ${news[0].title}`}
       class="relative w-full md:w-2xl min-h-12 sm:min-h-18 md:min-h-22 leading-none filter group cursor-pointer"
       style="filter: url(#threshold)"
-      aria-labelledby="morph-text"
     >
+      <span class="sr-only">
+        Leer artículo: {news[0].title}
+      </span>
+
       <span
         id="text1"
         aria-hidden="true"
-        class="absolute inset-0 flex sm:items-center font-heading font-semibold text-2xl sm:text-4xl md:text-6xl uppercase -tracking-wider text-white text-pretty"
+        class="absolute inset-0 flex sm:items-center font-heading font-semibold text-2xl sm:text-4xl md:text-6xl uppercase text-white"
       ></span>
+
       <span
         id="text2"
         aria-hidden="true"
-        class="absolute inset-0 flex sm:items-center font-heading font-semibold text-2xl sm:text-4xl md:text-6xl uppercase -tracking-wider text-white text-pretty"
+        class="absolute inset-0 flex sm:items-center font-heading font-semibold text-2xl sm:text-4xl md:text-6xl uppercase text-white"
       ></span>
     </a>
   </div>
@@ -111,6 +134,8 @@ const news = articulos
   >
     <a
       id="link"
+      href={`/articulos/${news[0].slug}`}
+      aria-label="Ver artículo completo"
       class="group relative flex flex-col items-center gap-2 cursor-pointer"
     >
       <!-- ICONO -->
