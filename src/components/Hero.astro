@@ -4,21 +4,22 @@ import { getCollection } from "astro:content";
 
 const articulos = await getCollection("articulos");
 
-const destacados = [
-  articulos[3],
-  articulos[0],
-  articulos[1],
-  articulos[5],
-].filter(Boolean);
+console.log(articulos.map((n) => n.slug));
 
-const news = destacados.map((art) => ({
-  slug: art.slug,
-  title: art.data.title,
-  subtitulo: art.data.subtitulo,
-  categorias: art.data.categorias,
-  imagen: art.data.imagen,
-  responsive: art.data.responsive,
-}));
+const indices = [3, 0, 1, 5];
+
+const news = indices
+  .map((i) => articulos[i])
+  .filter(Boolean)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .map((art) => ({
+    slug: art.slug,
+    title: art.data.title,
+    subtitulo: art.data.subtitulo,
+    categorias: art.data.categorias,
+    imagen: art.data.imagen,
+    responsive: art.data.responsive,
+  }));
 ---
 
 <section class="relative w-full h-svh overflow-hidden py-20">
