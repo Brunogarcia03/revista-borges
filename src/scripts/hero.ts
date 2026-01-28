@@ -11,7 +11,7 @@ export function initHero() {
   let autoplayTimeout: number | null = null;
 
   const containerMorph = document.getElementById(
-    "morph-container"
+    "morph-container",
   ) as HTMLAnchorElement;
   const text1 = document.getElementById("text1") as HTMLSpanElement;
   const text2 = document.getElementById("text2") as HTMLSpanElement;
@@ -54,11 +54,18 @@ export function initHero() {
     ease: "expo.out",
   });
 
-  gsap.from([btnPrev, btnNext, ".p-counter", "#link"], {
+  gsap.from([btnPrev, btnNext, ".p-counter"], {
     y: 20,
     opacity: 0.2,
     duration: 1,
     stagger: 0.035,
+    ease: "expo.out",
+  });
+
+  gsap.from("#link", {
+    opacity: 0.2,
+    scale: 0.3,
+    duration: 1,
     ease: "expo.out",
   });
 
@@ -83,7 +90,7 @@ export function initHero() {
           gsap.to(loader, { scaleY: 0, duration: 0.5 });
           goTo((index + 1) % images.length);
         },
-      }
+      },
     );
   }
 
@@ -130,13 +137,13 @@ export function initHero() {
         {
           clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
         },
-        0
+        0,
       )
       .fromTo(
         text2,
         { opacity: 0, filter: "blur(12px)" },
         { opacity: 1, filter: "blur(0px)" },
-        0
+        0,
       )
       .to(text1, { opacity: 0, filter: "blur(12px)" }, 0)
       .add(() => {
