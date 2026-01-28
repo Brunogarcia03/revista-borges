@@ -70,13 +70,19 @@ const news = articulos
                 <Image
                   src={item.imagen}
                   alt={item.title}
-                  width={1024}
-                  height={768}
-                  widths={[400, 640, 768, 1024]}
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  width={640}
+                  height={360}
+                  widths={[320, 480, 640, 768]}
+                  sizes="
+    (min-width: 1280px) 25vw,
+    (min-width: 1024px) 33vw,
+    (min-width: 640px) 50vw,
+    100vw
+  "
                   format="webp"
+                  quality={70}
                   loading="lazy"
-                  class="w-full h-auto object-cover aspect-video group-hover:scale-110 transition-transform duration-300"
+                  class="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <h2 class="mt-2 text-md md:text-xl font-bold font-heading text-pretty">

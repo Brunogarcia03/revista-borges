@@ -13,6 +13,7 @@ import { getCollection } from "astro:content";
 import { getEntry } from "astro:content";
 
 import "../../styles/typography.css";
+import Image from "astro/components/Image.astro";
 
 export const prerender = true;
 
@@ -56,12 +57,13 @@ const { Content } = await art.render();
     >
       <div
         id="category"
-        class="px-5 py-1 bg-amber-300 opacity-0 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center mb-5"
+        class="px-5 py-1 bg-amber-300 opacity-0 uppercase font-heading font-bold text-sm md:text-base mx-auto text-center text-black mb-5"
       >
         {art.data.categorias[0]}
       </div>
       <p
         id="subtitle"
+        aria-hidden="true"
         class="uppercase font-semibold text-base md:text-lg leading-5 sm:leading-6 text-center max-w-xl md:max-w-2xl mx-auto text-pretty"
       >
         {art.data.subtitulo}
@@ -78,9 +80,15 @@ const { Content } = await art.render();
       <div
         class="relative w-full max-w-3xl mx-auto mt-6 md:mt-8 aspect-video rounded-[.2rem] overflow-hidden"
       >
-        <img
+        <Image
           src={art.data.imagen}
           alt={art.data.title}
+          width={693}
+          height={433}
+          sizes="(max-width: 768px) 100vw, 693px"
+          format="webp"
+          loading="eager"
+          fetchpriority="high"
           class="absolute inset-0 w-full h-full opacity-0 object-cover"
         />
       </div>

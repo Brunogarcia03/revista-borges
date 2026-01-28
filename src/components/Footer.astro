@@ -20,12 +20,12 @@ const { black = true } = Astro.props;
       >
 
       <div class="flex flex-col items-end w-full gap-4 sm:gap-8">
-        <h3
+        <p
           class="text-3xl md:text-4xl lg:text-5xl text-end text-balance max-w-none md:max-w-md font-bold font-heading uppercase"
           style="filter: url(#threshold)"
         >
           Pensar el presente. Publicar sin concesiones.
-        </h3>
+        </p>
         <a
           href="mailto:brunogalberti@gmail.com"
           class="flex justify-end text-center w-full max-w-xs md:max-w-sm group cursor-pointer"
@@ -48,6 +48,7 @@ const { black = true } = Astro.props;
       </p>
       <button
         id="top-button"
+        aria-label="Volver arriba"
         class={`py-2 px-2 sm:px-4 rounded-[.2rem] cursor-pointer  border border-dashed border-transparent hover:bg-transparent ${black ? "bg-white text-black hover:border-white hover:text-white" : "bg-black text-white hover:border-black hover:text-black"}  transition-colors duration-300`}
       >
         <svg
