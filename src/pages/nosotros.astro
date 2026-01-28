@@ -48,6 +48,7 @@ const contact = [
     <section class="mx-3 sm:mx-5 space-y-4 z-20">
       <p
         class="split text-lg sm:text-xl md:text-2xl leading-5 md:leading-7 font-bold max-w-5xl text-pretty z-20"
+        aria-hidden="true"
       >
         1. Un pequeño halo de reverberación en el aire ha deseado que luchemos
         por la libertad de expresión, su defensa, la contemplo como un bien
@@ -58,6 +59,7 @@ const contact = [
 
       <p
         class="split text-lg sm:text-xl md:text-2xl leading-5 md:leading-7 font-bold max-w-4xl text-pretty z-20"
+        aria-hidden="true"
       >
         2. Esta web tiene como objetivo divulgar literatura, arte, política,
         historia, cuentos, poesías. Si te interesa expandir el lenguaje con el
@@ -225,11 +227,11 @@ const contact = [
   import gsap from "gsap";
   import SplitText from "gsap/SplitText";
 
-  import img1 from "../assets/simulations/img1.png";
-  import img2 from "../assets/simulations/img2.jpg";
-  import img3 from "../assets/simulations/img3.png";
-  import img4 from "../assets/simulations/img4.png";
-  import img5 from "../assets/simulations/img5.png";
+  import img1 from "../assets/simulations/img1.webp";
+  import img2 from "../assets/simulations/img2.webp";
+  import img3 from "../assets/simulations/img3.webp";
+  import img4 from "../assets/simulations/img4.webp";
+  import img5 from "../assets/simulations/img5.webp";
 
   import services1 from "../assets/photos/services1.webp";
   import services2 from "../assets/photos/services2.webp";
@@ -329,7 +331,7 @@ const contact = [
           gsap.set(wrapper, {
             scale: 1.05,
             opacity: 0,
-            clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
+            clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)",
           });
 
           activeWrapper = wrapper;
