@@ -56,7 +56,7 @@ const { black = true } = Astro.props;
           height="24px"
           viewBox="0 -960 960 960"
           width="24px"
-          class="block sm:hidden"
+          class={`block sm:hidden ${black ? "fill-black" : "fill-white"}`}
           fill="#000"
           ><path
             d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
@@ -71,14 +71,16 @@ const { black = true } = Astro.props;
       class={`flex items-center justify-end gap-2 font-heading uppercase ${black ? "text-neutral-400" : "text-neutral-600"}`}
     >
       <a
-        href="#"
+        href="https://www.instagram.com/bruugarcia_/"
+        target="_blank"
         class={`cursor-pointer ${black ? "hover:text-white" : "hover:text-black"} transition-colors duration-300`}
         >Instragram</a
       >
       <a
-        href="#"
+        href="https://substack.com/@bruugarcia"
+        target="_blank"
         class={`cursor-pointer ${black ? "hover:text-white" : "hover:text-black"} transition-colors duration-300`}
-        >Youtube</a
+        >Substack</a
       >
     </div>
   </div>
