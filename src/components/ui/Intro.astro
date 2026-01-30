@@ -16,14 +16,69 @@ import Logo from "../../assets/svgs/Logo.astro";
     <h3 id="intro-counter" class="text-white uppercase mt-1 tabular-nums">
       0%
     </h3>
+    <div
+      class="absolute bottom-0 left-0 text-white font-bold z-1000 overflow-hidden ml-4 mb-4"
+    >
+      <p
+        class="split font-content opacity-0 tracking-widest"
+        style="filter: url(#threshold)"
+      >
+        ¡Gracias por leer Parrhesia!
+      </p>
+    </div>
   </div>
+  <svg class="absolute w-0 h-0">
+    <defs>
+      <filter id="threshold">
+        <feColorMatrix
+          in="SourceGraphic"
+          type="matrix"
+          values=" 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140 "
+        ></feColorMatrix>
+      </filter>
+    </defs>
+  </svg>
 </section>
+
+<style>
+  .split {
+    font-size: clamp(1rem, 3rem, 2vw);
+    letter-spacing: 0.05rem;
+    will-change: transform;
+  }
+
+  .split * {
+    will-change: transform;
+  }
+</style>
 
 <script>
   import { gsap } from "gsap";
+  import { SplitText } from "gsap/SplitText";
+
+  gsap.registerPlugin(SplitText);
+
+  gsap.set(".split", { opacity: 1 });
+
+  let split;
+  SplitText.create(".split", {
+    type: "words",
+    autoSplit: true,
+    onSplit: (self) => {
+      split = gsap.from(self.words, {
+        duration: 1.8,
+        delay: 0.5,
+        yPercent: -150,
+        opacity: 0,
+        stagger: 0.1,
+        ease: "expo.out",
+      });
+      return split;
+    },
+  });
 
   const counterEl = document.getElementById(
-    "intro-counter"
+    "intro-counter",
   ) as HTMLHeadingElement;
 
   const counter = { value: 0 };
@@ -49,7 +104,7 @@ import Logo from "../../assets/svgs/Logo.astro";
           counterEl.textContent = `${Math.round(counter.value)}%`;
         },
       },
-      "<0.2"
+      "<0.2",
     )
 
     .to(
@@ -60,7 +115,7 @@ import Logo from "../../assets/svgs/Logo.astro";
         ease: "power2.inOut",
         pointerEvents: "none",
       },
-      "+=0.3"
+      "+=0.3",
     )
     .to("#intro-section", {
       display: "none",
