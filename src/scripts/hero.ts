@@ -45,8 +45,9 @@ export function initHero() {
   containerMorph.href = `/articulos/${currentData?.slug}`;
 
   gsap.from(text1, {
-    duration: 0.6,
+    duration: 1.5,
     opacity: 0,
+    filter: "blur(12px)",
     y: 40,
     ease: "expo.out",
   });
@@ -62,6 +63,7 @@ export function initHero() {
   gsap.from("#link", {
     opacity: 0.2,
     scale: 0.3,
+    filter: "blur(4px)",
     duration: 1,
     ease: "expo.out",
   });
@@ -84,7 +86,7 @@ export function initHero() {
         duration: AUTOPLAY_DELAY / 1000,
         ease: "linear",
         onComplete: () => {
-          gsap.to(loader, { scaleY: 0, duration: 0.5 });
+          gsap.to(loader, { scaleY: 0, duration: 0.8 });
           goTo((index + 1) % images.length);
         },
       },
@@ -92,6 +94,7 @@ export function initHero() {
   }
 
   function stopAutoplay() {
+    gsap.to(loader, { scaleY: 0, duration: 0.5 });
     autoplay = false;
     if (autoplayTimeout) clearTimeout(autoplayTimeout);
     gsap.killTweensOf(loader);

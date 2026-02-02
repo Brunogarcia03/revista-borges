@@ -97,6 +97,30 @@ const news = articulos
   </main>
 </Layout>
 
+<script>
+  import { gsap } from "gsap";
+
+  document.addEventListener("astro:page-load", () => {
+    const articles = document.querySelectorAll(".article-item-page");
+
+    gsap.fromTo(
+      articles,
+      {
+        opacity: 0,
+        filter: "blur(4px)",
+        y: 20,
+      },
+      {
+        opacity: 1,
+        filter: "blur(0px)",
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+      },
+    );
+  });
+</script>
+
 <script is:inline>
   function initCategoryFilter() {
     const buttons = document.querySelectorAll(".category-btn-page");
