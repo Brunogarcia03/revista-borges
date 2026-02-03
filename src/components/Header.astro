@@ -125,6 +125,11 @@ const { black = "false" } = Astro.props;
     });
 
     menuTl
+      .to("#logo-link", {
+        opacity: 0,
+        y: -10,
+        duration: 0.3,
+      })
       .to(navMenu, {
         clipPath: "inset(0 0 0 20%)",
       })
@@ -136,7 +141,7 @@ const { black = "false" } = Astro.props;
           borderColor: "#000",
           duration: 0.4,
         },
-        "<"
+        "<",
       )
       .to(svgMenu, { opacity: 0, scale: 0, duration: 0.1 }, "<")
       .to(svgClose, { opacity: 1, scale: 1, duration: 0.1 }, ">");
@@ -151,7 +156,7 @@ const { black = "false" } = Astro.props;
       button.setAttribute("aria-expanded", String(open));
       button.setAttribute(
         "aria-label",
-        open ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+        open ? "Cerrar menú de navegación" : "Abrir menú de navegación",
       );
 
       open ? menuTl.play() : menuTl.reverse();

@@ -25,7 +25,7 @@ const news = articulos
       Filtrar por
     </p>
     <div
-      class="container-category container-category--dark scroll-x-auto flex pb-2 pr-2 items-center mt-2 md:mt-4 gap-2 md:gap-4"
+      class="container-category container-category--dark scroll-x-auto overflow-y-hidden flex pb-2 pr-2 items-center mt-2 md:mt-4 gap-2 md:gap-4"
     >
       <button
         data-category={"todos"}
@@ -108,9 +108,17 @@ const news = articulos
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+  function isDesktop() {
+    return (
+      window.matchMedia("(pointer: fine)").matches &&
+      window.matchMedia("(hover: hover)").matches
+    );
+  }
+
   gsap.registerPlugin(ScrollTrigger);
 
   document.addEventListener("astro:page-load", () => {
+    if (!isDesktop()) return;
     const textFilter = document.getElementById("filter-by");
     const buttons = document.querySelectorAll(".category-btn");
     const articles = document.querySelectorAll(".article-item");
