@@ -64,14 +64,46 @@ const { black = "false" } = Astro.props;
       Sobre nosotros
     </a>
   </nav>
-</header><nav
+</header>
+<nav
   id="nav-menu"
-  class="fixed flex flex-col justify-center pl-[24%] gap-2 px-5 text-2xl font-bold font-heading uppercase inset-0 w-full h-full bg-white md:hidden z-998"
+  class="fixed flex flex-col justify-center pl-[24%] gap-2 px-5 text-2xl sm:text-3xl font-bold font-heading uppercase inset-0 w-full h-full bg-white md:hidden z-998"
   style="clip-path: inset(0 0 0 100%);"
 >
   <a href="/">Inicio</a><a href="/articulos">Artículos</a><a href="/nosotros"
     >Nosotros</a
   >
+  <ul
+    class="absolute flex items-center size-5 bottom-5 gap-3 text-sm leading-relaxed cursor-pointer"
+  >
+    <li>
+      <a
+        href={"mailto:brunogalberti@gmail.com"}
+        target="_blank"
+        class="hover:text-amber-300 transition-colors duration-300"
+      >
+        Email
+      </a>
+    </li>
+    <li>
+      <a
+        href={"https://www.instagram.com/bruugarcia_/"}
+        target="_blank"
+        class="hover:text-amber-300 transition-colors duration-300"
+      >
+        Instagram
+      </a>
+    </li>
+    <li>
+      <a
+        href={"https://substack.com/@bruugarcia"}
+        target="_blank"
+        class="hover:text-amber-300 transition-colors duration-300"
+      >
+        Substack
+      </a>
+    </li>
+  </ul>
 </nav>
 <div
   id="background-menu"
