@@ -81,12 +81,12 @@ const url = canonical ?? "https://revistaparrhesia.com";
 
   let lenis: any;
 
-  function isDesktop() {
-    return (
-      window.matchMedia("(pointer: fine)").matches &&
-      window.matchMedia("(hover: hover)").matches
-    );
-  }
+  // function isDesktop() {
+  //   return (
+  //     window.matchMedia("(pointer: fine)").matches &&
+  //     window.matchMedia("(hover: hover)").matches
+  //   );
+  // }
 
   function initLenis() {
     if (lenis) return lenis;
@@ -103,11 +103,11 @@ const url = canonical ?? "https://revistaparrhesia.com";
     return lenis;
   }
 
-  function destroyLenis() {
-    if (!lenis) return;
-    lenis.destroy();
-    lenis = null;
-  }
+  // function destroyLenis() {
+  //   if (!lenis) return;
+  //   lenis.destroy();
+  //   lenis = null;
+  // }
 
   document.addEventListener("astro:page-load", () => {
     initLenis();
