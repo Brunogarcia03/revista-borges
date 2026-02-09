@@ -89,7 +89,6 @@ const url = canonical ?? "https://revistaparrhesia.com";
   }
 
   function initLenis() {
-    if (!isDesktop()) return;
     if (lenis) return lenis;
 
     lenis = new Lenis({
@@ -115,11 +114,6 @@ const url = canonical ?? "https://revistaparrhesia.com";
   });
 
   document.addEventListener("astro:after-swap", () => {
-    if (!isDesktop()) {
-      destroyLenis();
-      return;
-    }
-
     if (!lenis) initLenis();
 
     lenis.scrollTo(0, { immediate: true });
