@@ -129,8 +129,8 @@ export default config({
           label: "Contenido",
           options: {
             image: {
-              directory: "src/assets/images/articulos",
-              publicPath: "/src/assets/images/articulos/",
+              directory: "public/uploads/articulos",
+              publicPath: "/uploads/articulos",
             },
           },
         }),
