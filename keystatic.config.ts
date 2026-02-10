@@ -65,7 +65,7 @@ export default config({
           },
           {
             label: "Redes sociales",
-          }
+          },
         ),
       },
     }),
@@ -101,7 +101,7 @@ export default config({
           {
             label: "Categorías",
             itemLabel: (item) => item.value ?? "Categoría",
-          }
+          },
         ),
 
         imagen: fields.image({
@@ -123,11 +123,16 @@ export default config({
           {
             label: "Autores",
             itemLabel: (item) => item.value ?? "Autor sin asignar",
-          }
+          },
         ),
-
         body: fields.markdoc({
           label: "Contenido",
+          options: {
+            image: {
+              directory: "src/assets/images/articulos",
+              publicPath: "/src/assets/images/articulos/",
+            },
+          },
         }),
       },
     }),
