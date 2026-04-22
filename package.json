@@ -8,10 +8,19 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "overrides": {
+    "vite": "^7",
+    "@keystatic/astro": {
+      "astro": "^6.0.0"
+    },
+    "@astrojs/vercel": {
+      "astro": "^6.0.0"
+    }
+  },
   "dependencies": {
     "@astrojs/markdoc": "^1.0.3",
     "@astrojs/react": "^5.0.3",
-    "@astrojs/vercel": "^10.0.4",
+    "@astrojs/vercel": "^8.0.4",
     "@fontsource-variable/oswald": "^5.2.8",
     "@fontsource/lato": "^5.2.7",
     "@fontsource/spectral": "^5.2.8",
