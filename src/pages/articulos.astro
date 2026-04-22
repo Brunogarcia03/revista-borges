@@ -11,7 +11,7 @@ const categories = await getCollection("categorias");
 const news = articulos
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .map((art) => ({
-    slug: art.slug,
+    slug: art.id,
     title: art.data.title,
     subtitulo: art.data.subtitulo,
     categorias: Array.isArray(art.data.categorias) ? art.data.categorias : [],
@@ -38,7 +38,7 @@ const news = articulos
           {
             categories.map((cat) => (
               <button
-                data-category={cat.id}
+                data-category={cat.data.slug}
                 class="category-btn-page text-[.8rem] md:text-[1rem] font-heading py-1 px-4 md:px-8 bg-transparent border border-dashed border-black rounded-[.2rem] cursor-pointer hover:bg-black hover:text-white duration-300 transition-colors capitalize"
               >
                 {cat.data.slug}
@@ -122,6 +122,14 @@ const news = articulos
 </script>
 
 <script is:inline>
+  function normalize(str) {
+    return str
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  }
+
   function initCategoryFilter() {
     const buttons = document.querySelectorAll(".category-btn-page");
     const articles = document.querySelectorAll(".article-item-page");
@@ -146,7 +154,7 @@ const news = articulos
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const category = btn.dataset.category;
+        const category = normalize(btn.dataset.category);
 
         setActiveButton(btn);
 
@@ -158,7 +166,7 @@ const news = articulos
         articles.forEach((article) => {
           const categories = article.dataset.categories
             ?.split(",")
-            .map((c) => c.trim());
+            .map((c) => normalize(c));
 
           article.style.display = categories?.includes(category) ? "" : "none";
         });
@@ -173,6 +181,5 @@ const news = articulos
     }
   }
 
-  // Astro transitions hook
   document.addEventListener("astro:page-load", initCategoryFilter);
 </script>

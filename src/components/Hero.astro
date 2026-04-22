@@ -13,10 +13,10 @@ const HERO_SLUGS = [
 ];
 
 const news = articulos
-  .filter((art) => HERO_SLUGS.includes(art.slug))
+  .filter((art) => HERO_SLUGS.includes(art.id))
   .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
   .map((art) => ({
-    slug: art.slug,
+    slug: art.id,
     title: art.data.title,
     subtitulo: art.data.subtitulo,
     categorias: art.data.categorias,

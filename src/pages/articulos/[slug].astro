@@ -9,7 +9,7 @@ import link from "../../assets/svgs/link.svg";
 import x from "../../assets/svgs/x_dark.svg";
 import linkedin from "../../assets/svgs/linkedin.svg";
 
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { getEntry } from "astro:content";
 
 import "../../styles/typography.css";
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
   const articulos = await getCollection("articulos");
 
   return articulos.map((art) => ({
-    params: { slug: art.slug },
+    params: { slug: art.id },
     props: { art },
   }));
 }
@@ -40,7 +40,8 @@ const authors = (
   )
 ).filter(Boolean);
 
-const { Content } = await art.render();
+const entry = await getEntry("articulos", art.id);
+const { Content } = await render(entry || art);
 ---
 
 <Layout
@@ -49,7 +50,7 @@ const { Content } = await art.render();
   description={art.data.subtitulo +
     "— Pensar el presente. Publicar sin concesiones."}
   image={art.data.imagen}
-  canonical={`https://revista-parrhesia.vercel.app/articulos/${art.slug}`}
+  canonical={`https://revista-parrhesia.vercel.app/articulos/${art.id}`}
 >
   <main class="w-full overflow-hidden bg-neutral-800">
     <section

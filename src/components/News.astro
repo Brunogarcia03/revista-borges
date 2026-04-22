@@ -8,7 +8,7 @@ const categories = await getCollection("categorias");
 const news = articulos
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .map((art) => ({
-    slug: art.slug,
+    slug: art.id,
     title: art.data.title,
     subtitulo: art.data.subtitulo,
     categorias: Array.isArray(art.data.categorias) ? art.data.categorias : [],
@@ -55,9 +55,7 @@ const news = articulos
         <a
           href={`/articulos/${item.slug}`}
           class="article-item"
-          data-categories={
-            item.categorias.length ? item.categorias.join(",") : ""
-          }
+          data-categories={item.categorias.length ? item.categorias : []}
         >
           <article class="relative group">
             <div class="absolute right-0 top-0 z-1 px-3 py-1 bg-amber-300 text-black uppercase font-heading font-bold text-xs">
@@ -160,6 +158,13 @@ const news = articulos
 </script>
 
 <script is:inline>
+  function normalize(str) {
+    return str
+      .toLowerCase()
+      .normalize("NFD") // separa acentos
+      .replace(/[\u0300-\u036f]/g, ""); // elimina acentos
+  }
+
   function initCategoryFilter() {
     const buttons = document.querySelectorAll(".category-btn");
     const articles = document.querySelectorAll(".article-item");
@@ -184,7 +189,7 @@ const news = articulos
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const category = btn.dataset.category;
+        const category = normalize(btn.dataset.category || "");
 
         requestAnimationFrame(() => {
           lenis.resize();
@@ -200,7 +205,12 @@ const news = articulos
         articles.forEach((article) => {
           const categories = article.dataset.categories
             ?.split(",")
-            .map((c) => c.trim());
+            .map((c) => normalize(c));
+
+          console.log({
+            btn: category,
+            article: categories,
+          });
 
           article.style.display = categories?.includes(category) ? "" : "none";
         });
