@@ -8,6 +8,9 @@ export default config({
       name: "revista-borges",
     },
   },
+  ui: {
+    brand: { name: "Revista Parrhesia" },
+  },
 
   collections: {
     categorias: collection({
