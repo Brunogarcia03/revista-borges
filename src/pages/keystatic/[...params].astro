@@ -1,5 +1,7 @@
 ---
-if (Astro.locals.keystatic) {
-  return Astro.locals.keystatic.redirect();
-}
+export const prerender = false;
 ---
+
+<html>
+  <head><meta http-equiv="refresh" content="0;url=/keystatic" /></head>
+</html>
