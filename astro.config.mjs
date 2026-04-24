@@ -6,9 +6,11 @@ import markdoc from "@astrojs/markdoc";
 import keystatic from "@keystatic/astro";
 
 export default defineConfig({
-  output: "server",
-  adapter: vercel(),
   site: "https://revistaparrhesia.com",
+  output: "server",
+  adapter: vercel({
+    edgeMiddleware: false,
+  }),
   vite: {
     plugins: [tailwindcss()],
   },

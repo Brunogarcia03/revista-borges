@@ -1,6 +1,6 @@
-import { defineMiddleware } from "astro:middleware";
+import type { MiddlewareHandler } from "astro";
 
-export const onRequest = defineMiddleware(async (context, next) => {
+export const onRequest: MiddlewareHandler = async (context, next) => {
   const isOAuthRoute =
     context.url.pathname.includes("/github/oauth/") ||
     context.url.pathname.includes("/github/login");
@@ -11,7 +11,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     if (forwardedHost && forwardedProto) {
       const correctUrl = new URL(context.url);
-      correctUrl.protocol = forwardedProto;
+      correctUrl.protocol = forwardedProto + ":";
       correctUrl.host = forwardedHost;
 
       const newRequest = new Request(correctUrl.toString(), {
@@ -27,4 +27,4 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   return next();
-});
+};
